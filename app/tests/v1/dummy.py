@@ -2,7 +2,7 @@
     Has tests dummy data
 """
 
-Users = [
+users = [
 
     {"username": "nesh", "email": "munenedeveloper@gmail.com", 
         "password": "12345", "role": 1},
@@ -15,7 +15,6 @@ Users = [
     {"username": "nesh", "email": "munenedeveloper@gmail.com", "role": 1},
     {"username": "nesh", "email": "munenedeveloper@gmail.com", 
         "password": "12345"}
-
 ]
 
 empty = {}
