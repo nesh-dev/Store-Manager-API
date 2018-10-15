@@ -1,0 +1,7 @@
+/thevenv
+
+/__pycache__
+
+*pyc 
+/.vscode
+/.pytest.cache
