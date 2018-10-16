@@ -42,14 +42,14 @@ def test_register_invalid_email():
     assert 'invalid email' in str(response.json)
 
 
-# test sucess login 
+# test sucess login
 def test_login():
     response = client.post('/api/v1/login', json=users[0])
-    assert response.status_code == 200 
+    assert response.status_code == 200
     assert 'user logged in' in str(response.json)
 
 
-# test login without data 
+# test login without data
 def test_login_without_data():
     response = client.post('/api/v1/login', json=empty)
     assert response.status_code == 400
@@ -66,7 +66,7 @@ def test_login_invalid_email():
 # test login missing email
 def test_login_missing_email():
     response = client.post('/api/v1/login', json=users[4])
-    assert response.status_code ==  400
+    assert response.status_code == 400
     assert 'missing required field email' in str(response.json)
 
 
