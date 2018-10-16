@@ -78,8 +78,21 @@ def test_edit_product():
 # test attendant edit product
 def test_attendant_edit_product():
     response = client.post('/api/v1/products/1', json=products[3],
-                           headers=admin_headers)
+                           headers=attendnt_headers)
     assert response.status_code == 401
     assert 'unauthorized to perform this function' in str(response.json)
 
 
+# test edit nonexisting item 
+def test_edit_non_existing_item():
+    response = client.post('/api/v1/products/20', json=products[3],
+                           headers=admin_headers)
+    assert response.status_code == 404
+    assert 'product with id 20 does not exist' in str(response.json)
+
+
+# test delete
+def test_delete():
+    response = client.delete('/api/v1/products/1', headers=admin_headers)
+    assert response.status_code == 202
+    assert 'product deleted' in str(response.json)
