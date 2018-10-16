@@ -1,7 +1,5 @@
 language: python 
 
-before install:
-  - export APP_SETTINGS="testing"
 
 python: 
   - "3.6"
@@ -13,7 +11,7 @@ install:
   - pip install nose
 
 script: 
-  - nosetests  --with-coverage --cover-package=.
+  - nosetests  --with-coverage --cover-package=app/tests
 
 after_success:
-  - "coveralls
+  - coveralls

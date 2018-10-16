@@ -4,7 +4,7 @@
 
 users = [
 
-    {"username": "nesh", "email": "munenedeveloper@gmail.com", 
+    {"username": "nesh", "email": "munenedeveloper@gmail.com",
         "password": "12345", "role": 1},
 
     {"username": "nesh", "email": "ksksksk", "password": "12345", "role": 1},
@@ -19,13 +19,13 @@ users = [
 
     {"username": "nesh", "email": "munenedeveloper@gmail.com", "role": 1},
 
-    {"username": "nesh", "email": "munenedeveloper@gmail.com", 
+    {"username": "nesh", "email": "munenedeveloper@gmail.com",
         "password": "12345"},
 
-    {"username": "nesh", "email": "munenedeveloper@gmail.com", 
+    {"username": "nesh", "email": "munenedeveloper@gmail.com",
         "password": "1234ss5", "role": 1},
 
-    {"username": "nesh", "email": "munenedeveloper@gmail.com", 
+    {"username": "nesh", "email": "munenedeveloper@gmail.com",
         "password": "12345", "role": 2}
 ]
 
@@ -39,7 +39,7 @@ products = [
     },
 
     {
-        "description": "A white polo shirt", "price": 100, 
+        "description": "A white polo shirt", "price": 100,
         "category": "clothes", "quantity": 2,
         "minimum_inventory": 100
     },
@@ -55,47 +55,47 @@ products = [
         "price": 100, "category": "clothes", "quantity": 2,
         "minimum_inventory": 100
     },
-    
-]    
+
+]
 
 category = [
     {
-        "name": "clothes", 
+        "name": "clothes",
         "description": "category has all types of apparels"
-    }, 
+    },
     {
         "description": "category has all types of apparels"
     },
     {
-        "name": 1, 
+        "name": 1,
         "description": "category has all types of apparels"
-    }, 
+    },
     {
-        "name": "Apprels", 
+        "name": "Apprels",
         "description": "category has all types of apparels"
     }
 
-    
+
 ]
 
 sales = [
     {
-        "product_name": "shirt", 
+        "product_name": "shirt",
         "quantity": 3,
         "customer": "Rose"
 
-    }, 
+    },
     {
         "quantity": 3,
         "customer": "Rose"
-    }, 
+    },
     {
-        "product_name": "shirt", 
+        "product_name": "shirt",
         "quantity": "3",
         "customer": "Rose"
-    }, 
+    },
     {
-        "product_name": "vest", 
+        "product_name": "vest",
         "quantity": 3,
         "customer": "Rose"
     }

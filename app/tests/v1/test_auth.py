@@ -1,5 +1,5 @@
 import unittest
-import json 
+import json
 
 from .dummy import users, empty
 from .base import BaseTest
@@ -25,14 +25,14 @@ class AuthEndpointsTestCase(BaseTest):
 
     # test already used email
     def test_register_existing_email(self):
-        response = self.client.post('/api/v1/register', 
+        response = self.client.post('/api/v1/register',
                                     data=json.dumps(users[0]))
         self.assertEqual(response.status_code, 409)
         self.assertIn('user with email already registred', str(response.data))
 
     # test resgister invalid email
     def test_register_invalid_email(self):
-        response = self.client.post('/api/v1/register', 
+        response = self.client.post('/api/v1/register',
                                     data=json.dumps(users[1]))
         self.assertEqual(response.status_code, 422)
         self.assertIn('invalid email', str(response.data))

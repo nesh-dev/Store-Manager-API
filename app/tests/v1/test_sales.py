@@ -32,9 +32,9 @@ class SalesTestEndpoints(BaseTest):
         self.assertEqual(response.status_code, 400)
         self.assertIn('missing required field', str(response.data))
 
-    # test get all saless 
+    # test get all saless
     def test_get_all_categories(self):
-        response = self.client.get('/api/v1/sales', 
+        response = self.client.get('/api/v1/sales',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 200)
 
@@ -44,23 +44,23 @@ class SalesTestEndpoints(BaseTest):
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 200)
 
-    # test get item non-existing id 
+    # test get item non-existing id
     def test_get_item_by_non_existing_id(self):
-        response = self.client.get('/api/v1/sales/20', 
+        response = self.client.get('/api/v1/sales/20',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)
         self.assertIn('sales with id 20 does not exist', str(response.data))
 
-    # test get item with str 
+    # test get item with str
     def test_get_item_by_str(self):
-        response = self.client.get('/api/v1/sales/"20"', 
+        response = self.client.get('/api/v1/sales/"20"',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 405)
         self.assertIn('int type required', str(response.data))
 
     # test admin edit sales
     def test_edit_sales(self):
-        response = self.client.post('/api/v1/sales/1', 
+        response = self.client.post('/api/v1/sales/1',
                                     data=json.dumps(sales[3]),
                                     headers=self.admin_headers)
         self.assertEqual(response.status_code, 201)
@@ -68,16 +68,16 @@ class SalesTestEndpoints(BaseTest):
 
     # test attendant edit sales
     def test_attendant_edit_sales(self):
-        response = self.client.post('/api/v1/sales/1', 
+        response = self.client.post('/api/v1/sales/1',
                                     data=json.dumps(sales[3]),
                                     headers=self.attendant_headers)
         self.assertEqual(response.status_code, 401)
         self.assertIn('unauthorized to perform this function',
                       str(response.data))
 
-    # test edit nonexisting item 
+    # test edit nonexisting item
     def test_edit_non_existing_item(self):
-        response = self.client.post('/api/v1/sales/20', 
+        response = self.client.post('/api/v1/sales/20',
                                     data=json.dumps(sales[3]),
                                     headers=self.admin_headers)
         self.assertEqual(response.status_code, 404)
@@ -85,7 +85,7 @@ class SalesTestEndpoints(BaseTest):
 
     # test delete
     def test_delete(self):
-        response = self.client.delete('/api/v1/sales/1', 
+        response = self.client.delete('/api/v1/sales/1',
                                       headers=self.admin_headers)
         self.assertEqual(response.status_code, 202)
         self.assertIn('sales deleted', str(response.data))
@@ -95,5 +95,5 @@ class SalesTestEndpoints(BaseTest):
         response = self.client.delete('/api/v1/sales/1',
                                       headers=self.attendant_headers)
         self.assertEqual(response.status_code, 401)
-        self.assertIn('unauthorized to perform this function', 
+        self.assertIn('unauthorized to perform this function',
                       str(response.data))
