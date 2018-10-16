@@ -57,3 +57,13 @@ products = [
     },
     
 ]    
+
+category = [
+    {
+        "name": "clothes", 
+        "description": "category has all types of apparels"
+    }, 
+    {
+        "description": "category has all types of apparels"
+    }
+]
