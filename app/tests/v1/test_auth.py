@@ -63,3 +63,16 @@ def test_login_invalid_email():
     assert 'invalid email' in str(response.json)
 
 
+# test login missing email
+def test_login_missing_email():
+    response = client.post('/api/v1/login', json=users[4])
+    assert response.status_code == 422
+    assert 'missing required field email' in str(response.json)
+
+
+# test login missing password
+def test_login_missing_password():
+    response = client.post('/api/v1/login', json=users[5])
+    assert response.status_code == 422
+    assert 'missing required field password' in str(response.json)
+
