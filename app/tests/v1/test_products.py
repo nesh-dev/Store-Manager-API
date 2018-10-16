@@ -22,7 +22,7 @@ def test_add_product():
     response = client.post('/api/v1/products', json=products[0],
                            headers=attendant_headers)
     assert response.status_code == 201
-    assert 'product created' in str(response.json)
+    assert 'shirt' in str(response.json)
 
 # test post same product
     def test_add_same_product():
@@ -38,4 +38,7 @@ def test_add_product():
         assert response.status_code == 400
         assert 'missing required field' in str(response.json)
 
-
+# test get all products 
+    def test_get_all_products():
+        response = client.get('/api/v1/products', headers=attendant_headers)
+        assert response.status_code == 200
