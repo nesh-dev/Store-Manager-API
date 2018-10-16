@@ -11,10 +11,12 @@ users = [
         "password": "123245", "role": 1},
     {"email": "munenedeveloper@gmail.com",
         "password": "123245", "role": 1},
-    {"username": "nesh", "password": "123245", "role": 1},
+    {"username": "nesh", "password": "12345", "role": 1},
     {"username": "nesh", "email": "munenedeveloper@gmail.com", "role": 1},
     {"username": "nesh", "email": "munenedeveloper@gmail.com", 
-        "password": "12345"}
+        "password": "12345"},
+    {"username": "nesh", "email": "munenedeveloper@gmail.com", 
+        "password": "1234ss5", "role": 1}
 ]
 
 empty = {}
