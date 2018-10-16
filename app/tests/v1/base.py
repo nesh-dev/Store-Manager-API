@@ -12,14 +12,14 @@ class BaseTest(unittest.TestCase):
         self.client = self.app.test_client()
 
         # to handle error in tests
-        self.client.post('api/v1/register', json=users[8])
-        user = self.client.post('api/v1/login', json=users[8]) 
+        self.client.post('api/v1/register', json.dumps(users[8]))
+        user = self.client.post('api/v1/login', json.dumps(users[8]))
         attendant_token = ""
         # attendant_token = user.get_json().get('access_token')
 
         # handle error in tests
-        self.client.post('api/v1/register', json=users[0])
-        user = self.client.post('api/v1/login', json=users[0]) 
+        self.client.post('api/v1/register', json.dumps(users[0]))
+        user = self.client.post('api/v1/login', json.dumps(users[0]))
         admin_token = ""
         # admin_token = user.get_json().get('access_token')
 
