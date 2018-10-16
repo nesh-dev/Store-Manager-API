@@ -60,14 +60,16 @@ class SalesTestEndpoints(BaseTest):
 
     # test admin edit sales
     def test_edit_sales(self):
-        response = self.client.post('/api/v1/sales/1', data=json.dumps(sales[3]),
+        response = self.client.post('/api/v1/sales/1', 
+                                    data=json.dumps(sales[3]),
                                     headers=self.admin_headers)
         self.assertEqual(response.status_code, 201)
         self.assertIn('vest', str(response.data))
 
     # test attendant edit sales
     def test_attendant_edit_sales(self):
-        response = self.client.post('/api/v1/sales/1', data=json.dumps(sales[3]),
+        response = self.client.post('/api/v1/sales/1', 
+                                    data=json.dumps(sales[3]),
                                     headers=self.attendant_headers)
         self.assertEqual(response.status_code, 401)
         self.assertIn('unauthorized to perform this function',
@@ -75,7 +77,8 @@ class SalesTestEndpoints(BaseTest):
 
     # test edit nonexisting item 
     def test_edit_non_existing_item(self):
-        response = self.client.post('/api/v1/sales/20', data=json.dumps(sales[3]),
+        response = self.client.post('/api/v1/sales/20', 
+                                    data=json.dumps(sales[3]),
                                     headers=self.admin_headers)
         self.assertEqual(response.status_code, 404)
         self.assertIn('sales with id 20 does not exist', str(response.data))
