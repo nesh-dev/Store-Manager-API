@@ -49,4 +49,11 @@ products = [
         "price": "100", "category": "clothes", "quantity": 2,
         "minimum_inventory": 100
     },
-]
+
+    {
+        "name": "vest", "description": "A white polo shirt",
+        "price": 100, "category": "clothes", "quantity": 2,
+        "minimum_inventory": 100
+    },
+    
+]    

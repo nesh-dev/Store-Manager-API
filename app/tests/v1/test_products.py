@@ -28,7 +28,7 @@ def test_add_product():
 # test post same product
 def test_add_same_product():
     response = client.post('/api/v1/products', json=products[0],
-                            headers=attendant_headers)
+                           headers=attendant_headers)
     assert response.status_code == 409
     assert 'product with name already exists' in str(response.json)
 
@@ -36,7 +36,7 @@ def test_add_same_product():
 # test post missing field
 def test_add_missing_field():
     response = client.post('/api/v1/products', json=products[1],
-                            headers=attendant_headers)
+                           headers=attendant_headers)
     assert response.status_code == 400
     assert 'missing required field' in str(response.json)
 
@@ -65,3 +65,14 @@ def test_get_item_by_str():
     response = client.get('/api/v1/products/"20"', headers=attendant_headers)
     assert response.status_code == 405
     assert 'int type required' in str(response.json)
+
+
+# test admin edit product
+def test_edit_product():
+    response = client.post('/api/v1/products/1', json=products[3],
+                           headers=admin_headers)
+    assert response.status_code == 201
+    assert 'vest' in str(response.json)
+
+
+
