@@ -65,5 +65,40 @@ category = [
     }, 
     {
         "description": "category has all types of apparels"
+    },
+    {
+        "name": 1, 
+        "description": "category has all types of apparels"
+    }, 
+    {
+        "name": "Apprels", 
+        "description": "category has all types of apparels"
     }
+
+    
+]
+
+sales = [
+    {
+        "product_name": "shirt", 
+        "quantity": 3,
+        "customer": "Rose"
+
+    }, 
+    {
+        "quantity": 3,
+        "customer": "Rose"
+    }, 
+    {
+        "product_name": "shirt", 
+        "quantity": "3",
+        "customer": "Rose"
+    }, 
+    {
+        "product_name": "vest", 
+        "quantity": 3,
+        "customer": "Rose"
+    }
+
+
 ]
