@@ -42,3 +42,8 @@ def test_add_product():
     def test_get_all_products():
         response = client.get('/api/v1/products', headers=attendant_headers)
         assert response.status_code == 200
+
+# test get sigle item
+    def test_get_item_by_id():
+        response = client.get('/api/v1/products/1', headers=attendant_headers)
+        assert response.status_code == 200
