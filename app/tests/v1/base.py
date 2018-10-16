@@ -7,7 +7,7 @@ from .dummy import users, empty
 class BaseTest(unittest.TestCase):
 
     def setUp(self):
-        self.app = create_app(config_name=testing)
+        self.app = create_app(config_name='testing')
         self.client = self.app.test_client()
 
         # to handle error in tests
@@ -30,4 +30,3 @@ class BaseTest(unittest.TestCase):
             'Authorization': 'Bearer {}'.format(attendant_token),
             'Content-Type': 'application/json'
             }
-        
