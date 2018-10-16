@@ -1,17 +1,10 @@
-import pytest
-from ... import create_app
+import unittest
 
 from .dummy import users, empty
-
-
+from .base import BaseTest
 """
     Tests for user auth
 """
-
-
-# app instance as test
-app = create_app(config_name="testing")
-client = app.test_client()
 
 
 # sucess register
