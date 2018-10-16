@@ -3,6 +3,7 @@ from ... import create_app
 
 from .dummy import users, empty
 
+# app instance as test
 app = create_app(config_name="testing")
 client = app.test_client()
 
@@ -33,5 +34,12 @@ def test_login():
     response = client.post('/api/v1/login', json=users[0])
     assert response.status_code == 200 
     assert 'user logged in' in str(response.json)
+
+
+# test login without data 
+def test_login_without_data():
+    response = client.post('/api/v1/login', json=empty)
+    assert response.status_code == 400
+    assert 'missing required field' in str(response.json)
 
 
