@@ -1,105 +1,96 @@
-# import pytest
-# from ... import create_app
+import pytest
 
-# from .dummy import sales, empty
+from .dummy import sales, empty
+from .base import BaseTest
 
-# # get auth headers for protected endpoints
-# from .headers import attendant_headers, admin_headers
-
-
-# """
-#     Tests for sales
-# """
+"""
+    Tests for sales
+"""
 
 
-# # app instance as test
-# app = create_app(config_name="testing")
-# client = app.test_client()
+class SalesTestEndpoints(BaseTest):
 
+    # test add saless
+    def test_add_sales(self):
+        response = self.client.post('/api/v1/sales', json=sales[0],
+                                    headers=self.admin_headers)
+        self.assertEqual(response.status_code, 201)
+        self.assertIn('clothes', str(response.json))
 
-# # test add saless
-# def test_add_sales():
-#     response = client.post('/api/v1/sales', json=sales[0],
-#                            headers=admin_headers)
-#     assert response.status_code == 201
-#     assert 'clothes' in str(response.json)
+    # test post same sales
+    def test_add_same_sales(self):
+        response = self.client.post('/api/v1/sales', json=sales[0],
+                                    headers=self.admin_headers)
+        self.assertEqual(response.status_code, 409)
+        self.assertIn('sales with name already exists',
+                      str(response.json))
 
+    # test post missing field
+    def test_add_missing_field(self):
+        response = self.client.post('/api/v1/sales', json=sales[1],
+                                    headers=self.admin_headers)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('missing required field', str(response.json))
 
-# # test post same sales
-# def test_add_same_sales():
-#     response = client.post('/api/v1/sales', json=sales[0],
-#                            headers=admin_headers)
-#     assert response.status_code == 409
-#     assert 'sales with name already exists' in str(response.json)
+    # test get all saless 
+    def test_get_all_categories(self):
+        response = self.client.get('/api/v1/categories', 
+                                   headers=self.attendant_headers)
+        self.assertEqual(response.status_code, 200)
 
+    # test get sigle item
+    def test_get_item_by_id(self):
+        response = self.client.get('/api/v1/sales/1',
+                                   headers=self.attendant_headers)
+        self.assertEqual(response.status_code, 200)
 
-# # test post missing field
-# def test_add_missing_field():
-#     response = client.post('/api/v1/sales', json=sales[1],
-#                            headers=admin_headers)
-#     assert response.status_code == 400
-#     assert 'missing required field' in str(response.json)
+    # test get item non-existing id 
+    def test_get_item_by_non_existing_id(self):
+        response = self.client.get('/api/v1/sales/20', 
+                                   headers=self.attendant_headers)
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('sales with id 20 does not exist', str(response.json))
 
+    # test get item with str 
+    def test_get_item_by_str(self):
+        response = self.client.get('/api/v1/sales/"20"', 
+                                   headers=self.attendant_headers)
+        self.assertEqual(response.status_code, 405)
+        self.assertIn('int type required', str(response.json))
 
-# # test get all saless 
-# def test_get_all_categories():
-#     response = client.get('/api/v1/categories', headers=attendant_headers)
-#     assert response.status_code == 200
+    # test admin edit sales
+    def test_edit_sales(self):
+        response = self.client.post('/api/v1/sales/1', json=sales[3],
+                                    headers=self.admin_headers)
+        self.assertEqual(response.status_code, 201)
+        self.assertIn('vest', str(response.json))
 
+    # test attendant edit sales
+    def test_attendant_edit_sales(self):
+        response = self.client.post('/api/v1/sales/1', json=sales[3],
+                                    headers=self.attendant_headers)
+        self.assertEqual(response.status_code, 401)
+        self.assertIn('unauthorized to perform this function',
+                      str(response.json))
 
-# # test get sigle item
-# def test_get_item_by_id():
-#     response = client.get('/api/v1/sales/1', headers=attendant_headers)
-#     assert response.status_code == 200
+    # test edit nonexisting item 
+    def test_edit_non_existing_item(self):
+        response = self.client.post('/api/v1/sales/20', json=sales[3],
+                                    headers=self.admin_headers)
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('sales with id 20 does not exist', str(response.json))
 
+    # test delete
+    def test_delete(self):
+        response = self.client.delete('/api/v1/sales/1', 
+                                      headers=self.admin_headers)
+        self.assertEqual(response.status_code, 202)
+        self.assertIn('sales deleted', str(response.json))
 
-# # test get item non-existing id 
-# def test_get_item_by_non_existing_id():
-#     response = client.get('/api/v1/sales/20', headers=attendant_headers)
-#     assert response.status_code == 404
-#     assert 'sales with id 20 does not exist' in str(response.json)
-
-
-# # test get item with str 
-# def test_get_item_by_str():
-#     response = client.get('/api/v1/sales/"20"', headers=attendant_headers)
-#     assert response.status_code == 405
-#     assert 'int type required' in str(response.json)
-
-
-# # test admin edit sales
-# def test_edit_sales():
-#     response = client.post('/api/v1/sales/1', json=sales[3],
-#                            headers=admin_headers)
-#     assert response.status_code == 201
-#     assert 'vest' in str(response.json)
-
-
-# # test attendant edit sales
-# def test_attendant_edit_sales():
-#     response = client.post('/api/v1/sales/1', json=sales[3],
-#                            headers=attendnt_headers)
-#     assert response.status_code == 401
-#     assert 'unauthorized to perform this function' in str(response.json)
-
-
-# # test edit nonexisting item 
-# def test_edit_non_existing_item():
-#     response = client.post('/api/v1/sales/20', json=sales[3],
-#                            headers=admin_headers)
-#     assert response.status_code == 404
-#     assert 'sales with id 20 does not exist' in str(response.json)
-
-
-# # test delete
-# def test_delete():
-#     response = client.delete('/api/v1/sales/1', headers=admin_headers)
-#     assert response.status_code == 202
-#     assert 'sales deleted' in str(response.json)
-
-
-# # test attendant delete
-# def test_attendant_delete():
-#     response = client.delete('/api/v1/sales/1', headers=attendant_headers)
-#     assert response.status_code == 401
-#     assert 'unauthorized to perform this function' in str(response.json)
+    # test attendant delete
+    def test_attendant_delete(self):
+        response = self.client.delete('/api/v1/sales/1',
+                                           headers=self.attendant_headers)
+        self.assertEqual(response.status_code, 401)
+        self.assertIn('unauthorized to perform this function', 
+                      str(response.json))
