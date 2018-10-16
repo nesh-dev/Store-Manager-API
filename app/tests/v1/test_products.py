@@ -28,6 +28,14 @@ def test_add_product():
     def test_add_same_product():
         response = client.post('/api/v1/products', json=products[0],
                                headers=attendant_headers)
-    assert response.status_code == 409
-    assert 'product with name already exists' in str(response.json)
+        assert response.status_code == 409
+        assert 'product with name already exists' in str(response.json)
+
+# test post missing field
+    def test_add_missing_field():
+        response = client.post('/api/v1/products', json=products[1],
+                               headers=attendant_headers)
+        assert response.status_code == 400
+        assert 'missing required field' in str(response.json)
+
 
