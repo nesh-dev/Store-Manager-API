@@ -90,7 +90,7 @@ class SalesTestEndpoints(BaseTest):
     # test attendant delete
     def test_attendant_delete(self):
         response = self.client.delete('/api/v1/sales/1',
-                                           headers=self.attendant_headers)
+                                      headers=self.attendant_headers)
         self.assertEqual(response.status_code, 401)
         self.assertIn('unauthorized to perform this function', 
                       str(response.json))
