@@ -20,7 +20,7 @@ client = app.test_client()
 # test add products
 def test_add_product():
     response = client.post('/api/v1/products', json=products[0],
-                           headers=attendant_headers)
+                           headers=admin_headers)
     assert response.status_code == 201
     assert 'shirt' in str(response.json)
 
@@ -28,7 +28,7 @@ def test_add_product():
 # test post same product
 def test_add_same_product():
     response = client.post('/api/v1/products', json=products[0],
-                           headers=attendant_headers)
+                           headers=admin_headers)
     assert response.status_code == 409
     assert 'product with name already exists' in str(response.json)
 
@@ -36,7 +36,7 @@ def test_add_same_product():
 # test post missing field
 def test_add_missing_field():
     response = client.post('/api/v1/products', json=products[1],
-                           headers=attendant_headers)
+                           headers=admin_headers)
     assert response.status_code == 400
     assert 'missing required field' in str(response.json)
 
@@ -96,3 +96,10 @@ def test_delete():
     response = client.delete('/api/v1/products/1', headers=admin_headers)
     assert response.status_code == 202
     assert 'product deleted' in str(response.json)
+
+
+# test attendant delete
+def test_attendant_delete():
+    response = client.delete('/api/v1/products/1', headers=attendant_headers)
+    assert response.status_code == 401
+    assert 'unauthorized to perform this function' in str(response.json)
