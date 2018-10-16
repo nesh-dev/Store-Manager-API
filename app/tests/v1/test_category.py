@@ -17,7 +17,7 @@ app = create_app(config_name="testing")
 client = app.test_client()
 
 
-# test add products
+# test add categorys
 def test_add_category():
     response = client.post('/api/v1/category', json=category[0],
                            headers=admin_headers)
@@ -25,12 +25,12 @@ def test_add_category():
     assert 'clothes' in str(response.json)
 
 
-# test post same product
+# test post same category
 def test_add_same_category():
     response = client.post('/api/v1/category', json=category[0],
                            headers=admin_headers)
     assert response.status_code == 409
-    assert 'product with name already exists' in str(response.json)
+    assert 'category with name already exists' in str(response.json)
 
 
 # test post missing field
@@ -41,7 +41,7 @@ def test_add_missing_field():
     assert 'missing required field' in str(response.json)
 
 
-# test get all products 
+# test get all categorys 
 def test_get_all_categories():
     response = client.get('/api/v1/categories', headers=attendant_headers)
     assert response.status_code == 200
@@ -57,7 +57,7 @@ def test_get_item_by_id():
 def test_get_item_by_non_existing_id():
     response = client.get('/api/v1/category/20', headers=attendant_headers)
     assert response.status_code == 404
-    assert 'product with id 20 does not exist' in str(response.json)
+    assert 'category with id 20 does not exist' in str(response.json)
 
 
 # test get item with str 
@@ -67,7 +67,7 @@ def test_get_item_by_str():
     assert 'int type required' in str(response.json)
 
 
-# test admin edit product
+# test admin edit category
 def test_edit_category():
     response = client.post('/api/v1/category/1', json=category[3],
                            headers=admin_headers)
@@ -75,7 +75,7 @@ def test_edit_category():
     assert 'vest' in str(response.json)
 
 
-# test attendant edit product
+# test attendant edit category
 def test_attendant_edit_category():
     response = client.post('/api/v1/category/1', json=category[3],
                            headers=attendnt_headers)
@@ -88,14 +88,14 @@ def test_edit_non_existing_item():
     response = client.post('/api/v1/category/20', json=category[3],
                            headers=admin_headers)
     assert response.status_code == 404
-    assert 'product with id 20 does not exist' in str(response.json)
+    assert 'category with id 20 does not exist' in str(response.json)
 
 
 # test delete
 def test_delete():
     response = client.delete('/api/v1/category/1', headers=admin_headers)
     assert response.status_code == 202
-    assert 'product deleted' in str(response.json)
+    assert 'category deleted' in str(response.json)
 
 
 # test attendant delete
