@@ -1,4 +1,5 @@
 import unittest 
+import json
 from ... import create_app
 
 from .dummy import users, empty

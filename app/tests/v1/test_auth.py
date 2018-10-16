@@ -1,4 +1,5 @@
 import unittest
+import json 
 
 from .dummy import users, empty
 from .base import BaseTest
