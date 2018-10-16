@@ -75,4 +75,11 @@ def test_edit_product():
     assert 'vest' in str(response.json)
 
 
+# test attendant edit product
+def test_attendant_edit_product():
+    response = client.post('/api/v1/products/1', json=products[3],
+                           headers=admin_headers)
+    assert response.status_code == 401
+    assert 'unauthorized to perform this function' in str(response.json)
+
 
