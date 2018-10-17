@@ -12,16 +12,18 @@ class BaseTest(unittest.TestCase):
         self.client = self.app.test_client()
 
         # to handle error in tests
-        self.client.post('api/v1/register', data=json.dumps(users[8]))
-        user = self.client.post('api/v1/login', data=json.dumps(users[8]))
-        attendant_token = ""
-        # attendant_token = user.get_json().get('access_token')
+        self.client.post('api/v1/register', data=json.dumps(users[8]),
+                         content_type='application/json')
+        user = self.client.post('api/v1/login', data=json.dumps(users[8]),
+                                content_type='application/json')
+        attendant_token = user.get_json().get('access_token')
 
         # handle error in tests
-        self.client.post('api/v1/register', data=json.dumps(users[0]))
-        user = self.client.post('api/v1/login', data=json.dumps(users[0]))
-        admin_token = ""
-        # admin_token = user.get_json().get('access_token')
+        self.client.post('api/v1/register', data=json.dumps(users[0]),
+                         content_type='application/json')
+        user = self.client.post('api/v1/login', data=json.dumps(users[0]),
+                                content_type='application/json')
+        admin_token = user.get_json().get('access_token')
 
         self.admin_headers = admin_headers = {
             'Authorization': 'Bearer {}'.format(admin_token),

@@ -8,6 +8,4 @@ jwt = JWTManager()
 @jwt.token_in_blacklist_loader
 def check_if_token_is_revoked(decrypted_token):
     jti = decrypted_token['jti']
-    token = {'token_blacked': jti}
-    mycheck = UserModel.check_if_blacklist(token)
-    return not mycheck
+    return UserModel.check_if_blacklist(jti)

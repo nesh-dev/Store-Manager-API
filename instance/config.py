@@ -7,13 +7,13 @@ import os
 
 class Config(object):
 
-
     # Base Config
 
     DEBUG = False
     # get secret key from enviroment variables
     SECRET_KEY = os.getenv('SECRET_KEY')
-    
+    JWT_BLACKLIST_ENABLED = True
+
     Testing = False
 
 
@@ -33,9 +33,7 @@ class ProductionConfig(Config):
 
 # assign configurations to a dictionary
 app_config = {
-
     'development': DevelopmentConfig,
-
     'production': ProductionConfig,
     'testing': TestConfig
 }

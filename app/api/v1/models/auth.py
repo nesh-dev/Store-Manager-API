@@ -19,8 +19,6 @@ class UserModel(BaseModel):
 
     def blacklist(self, data):
         self.blacklist_list.append(data)
-        return True
-
 
     def check_if_blacklist(self, data):
         if data in self.blacklist_list:

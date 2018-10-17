@@ -1,6 +1,9 @@
+import datetime
 from flask_restful import reqparse, Resource
-from flask_jwt_extended import (create_access_token, create_refresh_token, get_raw_jwt)
+from flask_jwt_extended import (create_access_token, create_refresh_token,
+                                get_raw_jwt)
 from werkzeug.security import safe_str_cmp
+from flask import jsonify
 
 import re
 
@@ -16,6 +19,7 @@ class RegisterResource(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('username', type=str, required=True)
     parser.add_argument('password', type=str, required=True)
+    parser.add_argument('confirm_password', type=str, required=True)
     parser.add_argument('role', type=int, required=True)
     parser.add_argument('email', type=str, required=True)
 
@@ -28,15 +32,19 @@ class RegisterResource(Resource):
         role_id = [1, 2]
 
         try:
-            if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
-                            data['email']):
-                return {"message": "invalid email"}
+            if not re.match(
+                r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+                    data['email']):
+                return {"message": "invalid email"}, 422
             elif len(data['password']) < 6:
-                return {"message": "password should atleast six characters long"}
+                return {"message":
+                        "password should atleast six characters long"}
             elif data['role'] not in role_id:
                 return {"message": "role id should either be 1 or 2"}
             elif data['username'] == "":
                 return {"message": "username should not be empty"}
+            elif data['confirm_password'] != data["password"]:
+                return {"message": "passwords do not match"}
         except:
             pass
 
@@ -44,16 +52,16 @@ class RegisterResource(Resource):
         user_id = UserModel.get_length(UserModel.get_users()) + 1
 
         if UserModel.get_by_name(data['email'], UserModel.get_users()):
-            return {"message": "user with email already registred"}
+            return {"message": "user with email already registred"}, 409
 
         user_data = {
             "id": user_id, "username": username,
             "email": data["email"], "password": data["password"],
             "role": data["role"]}
 
-        UserModel.add_user(user_data)
+        UserModel.add_user((user_data))
         user = UserModel.get_by_id(user_id, UserModel.get_users())
-        return user, 201
+        return {"message": "registration sucessfull"}, 201
 
 
 class LoginResource(Resource):
@@ -70,9 +78,10 @@ class LoginResource(Resource):
 
         # validate email
         try:
-            if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
-                            data['email']):
-                return {"message": "invalid email"}
+            if not re.match(
+                r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+                    data['email']):
+                return {"message": "invalid email"}, 422
         except:
             pass
 
@@ -83,8 +92,9 @@ class LoginResource(Resource):
         # check if password match
         if user and safe_str_cmp(user['password'], data['password']):
             access_token = create_access_token(identity=user)
-            return{"access_token": access_token, "message": "logged in"}
-        return {"message": "invalid credentials"}
+        
+            return{"access_token": access_token, "message": "logged in"}, 200
+        return {"message": "invalid credentials"}, 422
 
 
 class LogoutResource(Resource):
@@ -95,7 +105,5 @@ class LogoutResource(Resource):
     @attendant_auth
     def post(self):
         jti = get_raw_jwt()['jti']
-        token = {'token_blacked': jti}
-        blacklisted = UserModel.blacklist(token)
-        if blacklisted:
-            return {"message": "logged out"}, 200
+        blacklisted = UserModel.blacklist(jti)
+        return {"message": "logged out"}, 200
