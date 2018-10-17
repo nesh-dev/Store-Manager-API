@@ -1,5 +1,5 @@
-import os 
-from flask import Flask 
+import os
+from flask import Flask
 from flask_restful import Api
 from instance.config import app_config
 
