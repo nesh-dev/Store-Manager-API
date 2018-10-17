@@ -68,6 +68,15 @@ class LoginResource(Resource):
     def post(self):
         data = LoginResource.parser.parse_args()
 
+        # validate email
+         try:
+            if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+                            data['email']):
+                return {"message": "invalid email"}
+            except: 
+                pass
+
+
         if UserModel.get_length(UserModel.get_users()) == 0:
             return {"message": "please register"}
         # check if user exists
