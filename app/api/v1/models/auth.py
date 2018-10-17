@@ -1,6 +1,7 @@
+from .base import BaseModel
 
 
-class UserModel():
+class UserModel(BaseModel):
     def __init__(self):
         self.users = []
 
@@ -10,14 +11,5 @@ class UserModel():
     def add_user(self, data):
         self.users.append(data)
 
-    def get_by_id(self, id, data):
-        for item in data:
-            if item['id'] == id:
-                return item
 
-    def get_by_name(self, name, data):
-        for item in data:
-            if item['name'] == name:
-                return item
-    
-    
+UserModel = UserModel()
