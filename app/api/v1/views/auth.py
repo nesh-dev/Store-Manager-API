@@ -7,6 +7,7 @@ import re
 
 # local imports
 from ..models.auth import UserModel
+from ..middlware import attendant_auth, admin_auth
 
 
 class RegisterResource(Resource):
@@ -86,3 +87,5 @@ class LoginResource(Resource):
             access_token = create_access_token(identity=user)
             return{"access_token": access_token, "message": "logged in"}
         return {"message": "invalid credentials"}
+
+class LogoutResource(self):
