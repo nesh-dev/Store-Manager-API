@@ -11,5 +11,10 @@ class UserModel(BaseModel):
     def add_user(self, data):
         self.users.append(data)
 
+    def get_by_name(self, name, data):
+        for item in data:
+            if item['username'] == name:
+                return item
+
 
 UserModel = UserModel()
