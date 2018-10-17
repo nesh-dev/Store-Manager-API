@@ -1,13 +1,12 @@
 from flask_restful import reqparse, Resource
-from flask_jwt_extended import (create_access_token, create_refresh_token)
+from flask_jwt_extended import (create_access_token, create_refresh_token, get_raw_jwt)
 from werkzeug.security import safe_str_cmp
-from app.jwt import jwt
 
 import re
 
 # local imports
 from ..models.auth import UserModel
-from ..middlware import attendant_auth, admin_auth
+from ..middleware.middleware import attendant_auth, admin_auth
 
 
 class RegisterResource(Resource):
@@ -70,22 +69,33 @@ class LoginResource(Resource):
         data = LoginResource.parser.parse_args()
 
         # validate email
-         try:
+        try:
             if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
                             data['email']):
                 return {"message": "invalid email"}
-            except: 
-                pass
-
+        except:
+            pass
 
         if UserModel.get_length(UserModel.get_users()) == 0:
             return {"message": "please register"}
         # check if user exists
-        user = UserModel.get_by_name(data['email'], UserModel.get_users())  
+        user = UserModel.get_by_name(data['email'], UserModel.get_users())
         # check if password match
         if user and safe_str_cmp(user['password'], data['password']):
             access_token = create_access_token(identity=user)
             return{"access_token": access_token, "message": "logged in"}
         return {"message": "invalid credentials"}
 
-class LogoutResource(self):
+
+class LogoutResource(Resource):
+    """
+        logout endpoint
+    """
+
+    @attendant_auth
+    def post(self):
+        jti = get_raw_jwt()['jti']
+        token = {'token_blacked': jti}
+        blacklisted = UserModel.blacklist(token)
+        if blacklisted:
+            return {"message": "logged out"}, 200
