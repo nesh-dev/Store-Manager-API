@@ -1,4 +1,4 @@
-import os 
+import os
 
 """
     Implementaion of Various Instance Configurations
@@ -7,10 +7,13 @@ import os
 
 class Config(object):
 
-    # Base Config  
+
+    # Base Config
+
     DEBUG = False
-    # get secret key from enviroment variables 
-    SECRECT_KEY = os.getenv('SECRET_KEY')
+    # get secret key from enviroment variables
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    
     Testing = False
 
 
@@ -30,7 +33,9 @@ class ProductionConfig(Config):
 
 # assign configurations to a dictionary
 app_config = {
-    'development': DevelopmentConfig, 
+
+    'development': DevelopmentConfig,
+
     'production': ProductionConfig,
     'testing': TestConfig
 }
