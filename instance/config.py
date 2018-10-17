@@ -11,7 +11,7 @@ class Config(object):
 
     DEBUG = False
     # get secret key from enviroment variables
-    SECRECT_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.getenv('SECRET_KEY')
     Testing = False
 
 

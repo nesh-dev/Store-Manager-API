@@ -13,7 +13,7 @@ class UserModel(BaseModel):
 
     def get_by_name(self, name, data):
         for item in data:
-            if item['username'] == name:
+            if item['email'] == name:
                 return item
 
 
