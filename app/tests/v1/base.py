@@ -2,7 +2,7 @@ import unittest
 import json
 from ... import create_app
 
-from .dummy import users, empty
+from .dummy import users, empty, category, products
 
 
 class BaseTest(unittest.TestCase):
@@ -34,4 +34,14 @@ class BaseTest(unittest.TestCase):
             'Content-Type': 'application/json'
             }
 
-        
+        # create a test category 
+        self.client.post('/api/v1/categories',
+                         data=json.dumps(category[0]),
+                         content_type='application/json',
+                         headers=self.admin_headers)
+
+        # create a test prodct
+        esponse = self.client.post('/api/v1/products',
+                                   data=json.dumps(products[0]),
+                                   content_type='application/json',
+                                   headers=self.attendant_headers)
