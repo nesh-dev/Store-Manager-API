@@ -66,4 +66,20 @@ class SalesListResource(Resource):
             sale = SalesModel.get_by_id(sales_id, sales_list)
             return sale, 201
         return {"message": message}, 404
-        
+
+
+class SaleResource(Resource):
+
+    @both_auth
+    def get(self, id):
+        current_user = get_jwt_identity()
+        username = current_user["username"]
+
+        sale = SalesModel.get_by_id(id, sales_list) 
+
+        if sale:
+            attendant = sale["attendant"] 
+            if username == attendant:
+                return sale, 200
+            return {"message": "not authorization to view sale"}, 401
+        return {"message": "sale with id {} does not exist".format(id)}, 404

@@ -9,7 +9,7 @@ from .views.auth import (RegisterResource, LoginResource,
                          LogoutResource)
 from .views.category import CategoryListResource, CategoryResource
 
-from .views.sales import SalesListResource
+from .views.sales import SalesListResource, SaleResource
 
 apiv1 = Blueprint('apiv1', __name__)
 
@@ -28,5 +28,5 @@ api.add_resource(CategoryListResource, '/categories')
 api.add_resource(CategoryResource, '/category/<int:id>')
 
 api.add_resource(SalesListResource, '/sales')
-
+api.add_resource(SaleResource, '/sales/<int:id>')
 
