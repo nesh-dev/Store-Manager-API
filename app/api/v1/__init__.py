@@ -2,7 +2,6 @@
 from flask import Blueprint 
 from flask_restful import Api 
 
-
 from .views.auth import RegisterResource, LoginResource, LogoutResource
 from .views.products import ProductListResource, ProductResource
 

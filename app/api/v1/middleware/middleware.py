@@ -45,4 +45,5 @@ def both_auth(fn):
     @jwt_required
     def wrapper(*args, **kwargs):
         return fn(*args, **kwargs)
-
+    return wrapper
+    
