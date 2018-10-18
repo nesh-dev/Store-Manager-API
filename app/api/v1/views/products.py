@@ -99,7 +99,7 @@ class ProductResource(Resource):
         """
             edit the Product
         """
-
+        data = ProductResource.parser.parse_args()
         # validate empty string inputs 
         try:
             for k, v in data.items():
@@ -109,7 +109,7 @@ class ProductResource(Resource):
             pass
 
         message = "Product with id {} does not exist".format(id)
-        data = ProductResource.parser.parse_args()
+        
         item_to_edit = ProductModel.get_by_id(id, product_list)
         if item_to_edit:
             item_to_edit.update(data)

@@ -70,16 +70,50 @@ class SalesListResource(Resource):
 
 class SaleResource(Resource):
 
+    parser = reqparse.RequestParser()
+    parser.add_argument("product_id", type=int, required=True)
+    parser.add_argument("quantity", type=int, required=True)
+    parser.add_argument("customer", type=str, required=True)
+
     @both_auth
     def get(self, id):
         current_user = get_jwt_identity()
         username = current_user["username"]
+        role = current_user["role"]
 
         sale = SalesModel.get_by_id(id, sales_list) 
 
         if sale:
             attendant = sale["attendant"] 
-            if username == attendant:
+            if (username == attendant) or (role == 2):
                 return sale, 200
             return {"message": "not authorization to view sale"}, 401
         return {"message": "sale with id {} does not exist".format(id)}, 404
+
+    @admin_auth
+    def put(self, id):
+        
+        data = SaleResource.parser.parse_args()
+        # validate empty string inputs 
+        try:
+            for k, v in data.items():
+                if v == "":
+                    return {"message": "{} cannot be an empty".format(k)}
+        except:
+            pass
+
+        message = "Sale with id {} does not exist".format(id)
+        item_to_edit = SalesModel.get_by_id(id, sales_list)
+        if item_to_edit:
+            item_to_edit.update(data)
+            return item_to_edit, 201
+        return {"message": message}, 404
+
+    @admin_auth
+    def delete(self, id):
+        message = "Sale with id {} does not exist".format(id)
+        item_to_delete = SalesModel.get_by_id(id, sales_list)
+        if item_to_delete:
+            SalesModel.delete(id, sales_list)
+            return {"message": "Sale deleted"}, 202
+        return {"message": message}
