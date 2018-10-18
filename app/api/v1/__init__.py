@@ -15,6 +15,6 @@ api.add_resource(RegisterResource, '/register')
 api.add_resource(LoginResource, '/login')
 api.add_resource(LogoutResource, '/logout')
 api.add_resource(ProductListResource, '/products')
-api.add_resource(ProductResource, '/product/<int:id>')
+api.add_resource(ProductResource, '/products/<int:id>')
 
 
