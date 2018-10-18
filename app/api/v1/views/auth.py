@@ -9,7 +9,7 @@ import re
 
 # local imports
 from ..models.auth import UserModel
-from ..middleware.middleware import attendant_auth, admin_auth
+from ..middleware.middleware import both_auth
 
 
 class RegisterResource(Resource):
@@ -102,7 +102,7 @@ class LogoutResource(Resource):
         logout endpoint
     """
 
-    @attendant_auth
+    @both_auth
     def post(self):
         jti = get_raw_jwt()['jti']
         blacklisted = UserModel.blacklist(jti)
