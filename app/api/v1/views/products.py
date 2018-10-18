@@ -57,20 +57,20 @@ class ProductListResource(Resource):
         if category:
             # get category name via its key  name 
             category_name = category['name']
+
+            # prodct item to be saved
+            Product_input = {
+                            "id": Product_id, "name": data["name"],
+                            "description": data["description"],
+                            "category": category_name,
+                            "price": data["price"],
+                            "quantity": data["quantity"],
+                            "minimum_inventory": data["minimum_inventory"]
+                            }
+            ProductModel.add_product(Product_input)
+            Product = ProductModel.get_by_id(Product_id, product_list)
+            return Product, 201
         return {"message": message}, 404
-        
-        # prodct item to be saved
-        Product_input = {
-                         "id": Product_id, "name": data["name"],
-                         "description": data["description"],
-                         "category": category_name,
-                         "price": data["price"],
-                         "quantity": data["quantity"],
-                         "minimum_inventory": data["minimum_inventory"]
-                        }
-        ProductModel.add_product(Product_input)
-        Product = ProductModel.get_by_id(Product_id, product_list)
-        return Product, 201
 
 
 class ProductResource(Resource):
