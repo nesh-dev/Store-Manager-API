@@ -2,7 +2,7 @@ from flask_restful import reqparse, Resource
 import re
 # local imports
 from ..models.category import CategoryModel
-from ..middleware.middleware import attendant_auth, admin_auth, both_auth
+from ..middleware.middleware import both_roles_allowed
 
 
 # all categories in list
@@ -15,7 +15,7 @@ class CategoryListResource(Resource):
     parser.add_argument("name", type=str, required=True)
     parser.add_argument("description", type=str, required=True)
 
-    @both_auth
+    @both_roles_allowed
     def get(self):
         """
             Return category list
@@ -23,7 +23,7 @@ class CategoryListResource(Resource):
         cat_list = CategoryModel.get_categories()
         return cat_list
 
-    @both_auth
+    @both_roles_allowed
     def post(self):
         """
             post an item
@@ -55,7 +55,7 @@ class CategoryResource(Resource):
     parser.add_argument("name", type=str)
     parser.add_argument("description", type=str)
 
-    @both_auth
+    @both_roles_allowed
     def get(self, id):
         """
             get by id
@@ -66,7 +66,7 @@ class CategoryResource(Resource):
             return category, 200
         return {"message": message}, 404
 
-    @both_auth
+    @both_roles_allowed
     def put(self, id):
         """
             edit the category
@@ -88,7 +88,7 @@ class CategoryResource(Resource):
             return item_to_edit, 201
         return {"message": message}, 404
 
-    @both_auth
+    @both_roles_allowed
     def delete(self, id):
         message = "category with id {} does not exist".format(id)
         length = CategoryModel.get_length(cat_list) 

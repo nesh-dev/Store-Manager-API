@@ -97,7 +97,7 @@ category = [
 
 sales = [
     {
-        "id": 1,
+        "product_id": 1,
         "quantity": 3,
         "customer": "Rose"
 
@@ -112,7 +112,7 @@ sales = [
         "customer": "Rose"
     },
     {
-        "id": 2,
+        "product_id": 1,
         "quantity": 3,
         "customer": "Rose"
     }

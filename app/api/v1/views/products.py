@@ -3,7 +3,7 @@ import re
 # local imports
 from ..models.product import ProductModel
 from ..models.category import CategoryModel
-from ..middleware.middleware import both_auth
+from ..middleware.middleware import both_roles_allowed
 
 
 # all categories in list
@@ -20,7 +20,7 @@ class ProductListResource(Resource):
     parser.add_argument("quantity", type=int, required=True)
     parser.add_argument("minimum_inventory", type=int, required=True)
 
-    @both_auth
+    @both_roles_allowed
     def get(self):
         """
             Return Product list
@@ -28,7 +28,7 @@ class ProductListResource(Resource):
         product_list = ProductModel.get_products()
         return product_list
 
-    @both_auth
+    @both_roles_allowed
     def post(self):
         """
             post an item
@@ -83,7 +83,7 @@ class ProductResource(Resource):
     parser.add_argument("quantity", type=int, required=True)
     parser.add_argument("minimum_inventory", type=int, required=True)
 
-    @both_auth
+    @both_roles_allowed
     def get(self, id):
         """
             get by id
@@ -94,7 +94,7 @@ class ProductResource(Resource):
             return Product, 200
         return {"message": message}, 404
 
-    @both_auth
+    @both_roles_allowed
     def put(self, id):
         """
             edit the Product
@@ -116,7 +116,7 @@ class ProductResource(Resource):
             return item_to_edit, 201
         return {"message": message}, 404
 
-    @both_auth
+    @both_roles_allowed
     def delete(self, id):
         message = "Product with id {} does not exist".format(id)
         length = ProductModel.get_length(product_list) 

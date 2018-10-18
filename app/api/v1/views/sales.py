@@ -5,7 +5,9 @@ import re
 # local imports
 from ..models.sales import SalesModel
 from ..models.product import ProductModel
-from ..middleware.middleware import both_auth, admin_auth, attendant_auth
+from ..middleware.middleware import (both_roles_allowed,
+                                     admin_allowed,
+                                     attendant_allowed)
 
 sales_list = SalesModel.get_sales()
 
@@ -17,11 +19,11 @@ class SalesListResource(Resource):
     parser.add_argument("quantity", type=int, required=True)
     parser.add_argument("customer", type=str, required=True)
 
-    @admin_auth
+    @admin_allowed
     def get(self):
         return sales_list
 
-    @attendant_auth
+    @attendant_allowed
     def post(self):
 
         data = SalesListResource.parser.parse_args()
@@ -36,7 +38,7 @@ class SalesListResource(Resource):
         # get the attendant details 
 
         current_user = get_jwt_identity()
-        username = current_user["username"]
+        user = current_user["email"]
 
         # increment sale by id
         sales_id = len(sales_list) + 1
@@ -59,7 +61,7 @@ class SalesListResource(Resource):
             # prodct item to be saved
             sale_input = {
                                 "id": sales_id, "product": product_name,
-                                "quantity": 3, "attendant": username, 
+                                "quantity": 3, "attendant": user, 
                                 "total": total
                             }
             SalesModel.add_sales(sale_input)
@@ -75,22 +77,22 @@ class SaleResource(Resource):
     parser.add_argument("quantity", type=int, required=True)
     parser.add_argument("customer", type=str, required=True)
 
-    @both_auth
+    @both_roles_allowed
     def get(self, id):
         current_user = get_jwt_identity()
-        username = current_user["username"]
+        user = current_user["email"]
         role = current_user["role"]
 
         sale = SalesModel.get_by_id(id, sales_list) 
 
         if sale:
             attendant = sale["attendant"] 
-            if (username == attendant) or (role == 2):
+            if (user == attendant) or (role == 2):
                 return sale, 200
-            return {"message": "not authorization to view sale"}, 401
+            return {"message": "no authorization to view sale"}, 401
         return {"message": "sale with id {} does not exist".format(id)}, 404
 
-    @admin_auth
+    @admin_allowed
     def put(self, id):
         
         data = SaleResource.parser.parse_args()
@@ -109,7 +111,7 @@ class SaleResource(Resource):
             return item_to_edit, 201
         return {"message": message}, 404
 
-    @admin_auth
+    @admin_allowed
     def delete(self, id):
         message = "Sale with id {} does not exist".format(id)
         item_to_delete = SalesModel.get_by_id(id, sales_list)

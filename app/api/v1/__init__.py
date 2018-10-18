@@ -4,11 +4,7 @@ from flask_restful import Api
 
 from .views.auth import RegisterResource, LoginResource, LogoutResource
 from .views.products import ProductListResource, ProductResource
-
-from .views.auth import (RegisterResource, LoginResource, 
-                         LogoutResource)
 from .views.category import CategoryListResource, CategoryResource
-
 from .views.sales import SalesListResource, SaleResource
 
 apiv1 = Blueprint('apiv1', __name__)

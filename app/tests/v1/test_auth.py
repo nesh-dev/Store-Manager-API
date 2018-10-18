@@ -1,7 +1,7 @@
 import unittest
 import json
 
-from .dummy import users, users_login, empty
+from .dummy_data import users, users_login, empty
 from .base import BaseTest
 """
     Tests for user auth

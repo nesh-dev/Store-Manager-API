@@ -23,4 +23,8 @@ class BaseModel(object):
         length = len(data)
         return length
 
+    def drop(self, data):
+        data = []
+        return data
+
 

@@ -2,7 +2,7 @@ import unittest
 import json
 
 from .base import BaseTest
-from .dummy import products, empty
+from .dummy_data import products, empty
 
 
 """
@@ -53,7 +53,7 @@ class ProductsEndpointsTest(BaseTest):
 
     # test get item non-existing id
     def test_get_item_by_non_existing_id(self):
-        response = self.client.get('/api/v1/products/20',
+        response = self.client.get('/api/v1/products/200',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)
         self.assertIn('Product with id 20 does not exist', str(response.data))
@@ -76,7 +76,7 @@ class ProductsEndpointsTest(BaseTest):
 
     # test edit nonexisting item
     def test_edit_non_existing_item(self):
-        response = self.client.put('/api/v1/products/20',
+        response = self.client.put('/api/v1/products/200',
                                    data=json.dumps(products[3]),
                                    content_type='application/json',
                                    headers=self.admin_headers)

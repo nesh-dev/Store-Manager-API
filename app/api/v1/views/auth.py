@@ -9,7 +9,7 @@ import re
 
 # local imports
 from ..models.auth import UserModel
-from ..middleware.middleware import both_auth
+from ..middleware.middleware import both_roles_allowed
 
 
 class RegisterResource(Resource):
@@ -31,22 +31,19 @@ class RegisterResource(Resource):
         username = ''.join(data['username'].split())
         role_id = [1, 2]
 
-        try:
-            if not re.match(
-                r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
-                    data['email']):
-                return {"message": "invalid email"}, 422
-            elif len(data['password']) < 6:
-                return {"message":
-                        "password should atleast six characters long"}
-            elif data['role'] not in role_id:
-                return {"message": "role id should either be 1 or 2"}
-            elif data['username'] == "":
-                return {"message": "username should not be empty"}
-            elif data['confirm_password'] != data["password"]:
-                return {"message": "passwords do not match"}
-        except:
-            pass
+        if not re.match(
+            r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+                data['email']):
+            return {"message": "invalid email"}, 422
+        elif len(data['password']) < 6:
+            return {"message":
+                    "password should atleast six characters long"}
+        elif data['role'] not in role_id:
+            return {"message": "role id should either be 1 or 2"}
+        elif data['username'] == "":
+            return {"message": "username should not be empty"}
+        elif data['confirm_password'] != data["password"]:
+            return {"message": "passwords do not match"}
 
         # increment Id
         user_id = UserModel.get_length(UserModel.get_users()) + 1
@@ -106,7 +103,7 @@ class LogoutResource(Resource):
         logout endpoint
     """
 
-    @both_auth
+    @both_roles_allowed
     def post(self):
         jti = get_raw_jwt()['jti']
         blacklisted = UserModel.blacklist(jti)

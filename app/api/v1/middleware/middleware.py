@@ -6,8 +6,13 @@ from flask_jwt_extended import (jwt_required,
                                 verify_jwt_in_request, get_jwt_identity)
 
 
-def admin_auth(fn):
-    @wraps(fn)
+"""
+    allows acess only to admin
+"""
+
+
+def admin_allowed(function):
+    @wraps(function)
     @jwt_required
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
@@ -19,12 +24,16 @@ def admin_auth(fn):
                     401
                 )
             )
-        return fn(*args, **kwargs)
+        return function(*args, **kwargs)
     return wrapper
 
+"""
+    allows access for attendants only 
+"""
 
-def attendant_auth(fn):
-    @wraps(fn)
+
+def attendant_allowed(function):
+    @wraps(function)
     @jwt_required
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
@@ -36,14 +45,17 @@ def attendant_auth(fn):
                     401
                 )
             )
-        return fn(*args, **kwargs)
+        return function(*args, **kwargs)
     return wrapper
 
 
-def both_auth(fn):
-    @wraps(fn)
+""" this allows both the attendant and admin to have access"""
+
+
+def both_roles_allowed(function):
+    @wraps(function)
     @jwt_required
     def wrapper(*args, **kwargs):
-        return fn(*args, **kwargs)
+        return function(*args, **kwargs)
     return wrapper
     
