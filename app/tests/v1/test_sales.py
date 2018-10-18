@@ -2,6 +2,7 @@ import pytest
 from flask import json
 from .dummy_data import sales, empty
 from .base import BaseTest
+from app.api.v1.models.sales import SalesModel
 
 """
     Tests for sales
@@ -43,7 +44,7 @@ class SalesTestEndpoints(BaseTest):
         response = self.client.get('/api/v1/sales/200',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('sale with id 20 does not exist', str(response.data))
+        self.assertIn('sale with id 200 does not exist', str(response.data))
 
     # test get item with str
     def test_get_item_by_str(self):
@@ -77,7 +78,7 @@ class SalesTestEndpoints(BaseTest):
                                    content_type='application/json',
                                    headers=self.admin_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('Sale with id 20 does not exist', str(response.data))
+        self.assertIn('Sale with id 200 does not exist', str(response.data))
 
     # test delete
     def test_delete(self):
@@ -93,3 +94,6 @@ class SalesTestEndpoints(BaseTest):
         self.assertEqual(response.status_code, 401)
         self.assertIn('unauthorized to perform  function',
                       str(response.data))
+
+ 
+ 

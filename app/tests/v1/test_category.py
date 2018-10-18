@@ -3,6 +3,7 @@ import json
 
 from .dummy_data import category, empty
 from . base import BaseTest
+from app.api.v1.models.category import CategoryModel
 
 """
     Tests for category

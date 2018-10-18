@@ -3,6 +3,9 @@ import json
 
 from .base import BaseTest
 from .dummy_data import products, empty
+from app.api.v1.models.auth import UserModel
+
+from app.api.v1.models.product import ProductModel
 
 
 """
@@ -56,7 +59,7 @@ class ProductsEndpointsTest(BaseTest):
         response = self.client.get('/api/v1/products/200',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('Product with id 20 does not exist', str(response.data))
+        self.assertIn('Product with id 200 does not exist', str(response.data))
 
     # test get item with str
     def test_get_item_by_str(self):
@@ -81,7 +84,7 @@ class ProductsEndpointsTest(BaseTest):
                                    content_type='application/json',
                                    headers=self.admin_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('Product with id 20 does not exist', str(response.data))
+        self.assertIn('Product with id 200 does not exist', str(response.data))
 
     # test delete
     def test_delete(self):
@@ -90,4 +93,3 @@ class ProductsEndpointsTest(BaseTest):
         self.assertEqual(response.status_code, 202)
         self.assertIn('Product deleted', str(response.data))
 
-  

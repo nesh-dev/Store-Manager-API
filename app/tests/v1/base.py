@@ -49,6 +49,7 @@ class BaseTest(unittest.TestCase):
                          data=json.dumps(products[0]),
                          content_type='application/json',
                          headers=self.attendant_headers)
+                         
         # create a test sale
         self.client.post('/api/v1/sales',
                          data=json.dumps(sales[0]),
@@ -56,8 +57,7 @@ class BaseTest(unittest.TestCase):
                          headers=self.attendant_headers)
 
         def tearDown(self):
-
-            UserModel.drop(UserModel.get_users())
-            CategoryModel.drop(CategoryModel.get_categories())
-            ProductModel.drop(ProductModel.get_products())
-            SalesModel.drop(SalesModel.get_sales())
+            with self.app.app_context():
+                CategoryModel.drop()
+                ProductModel.drop()
+                SalesModel.drop()

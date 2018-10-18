@@ -17,4 +17,8 @@ class SalesModel(BaseModel):
         total = (price * quantity)
         return total
 
+    # reset to empty list
+    def drop(self):
+        self.sales = []
+
 SalesModel = SalesModel()

@@ -12,5 +12,8 @@ class ProductModel(BaseModel):
     def add_product(self, data):
         self.products.append(data)
 
+    # reset to empty list
+    def drop(self):
+        self.products = []
 
 ProductModel = ProductModel()

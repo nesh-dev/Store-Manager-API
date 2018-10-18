@@ -3,7 +3,7 @@ from flask import Flask
 from flask_restful import Api
 from instance.config import app_config
 
-from .jwt import jwt
+from .jwt_instance import jwt
 from .api.v1 import apiv1
 
 
