@@ -5,6 +5,7 @@ from ... import create_app
 from .dummy import users, empty, category, products
 
 
+
 class BaseTest(unittest.TestCase):
 
     def setUp(self):
@@ -40,8 +41,10 @@ class BaseTest(unittest.TestCase):
                          content_type='application/json',
                          headers=self.admin_headers)
 
+
         # create a test prodct
         esponse = self.client.post('/api/v1/products',
                                    data=json.dumps(products[0]),
                                    content_type='application/json',
                                    headers=self.attendant_headers)
+

@@ -3,13 +3,13 @@ from flask_restful import reqparse, Resource
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 get_raw_jwt)
 from werkzeug.security import safe_str_cmp
-from flask import jsonify
+
 
 import re
 
 # local imports
 from ..models.auth import UserModel
-from ..middleware.middleware import attendant_auth, admin_auth
+from ..middleware.middleware import both_auth
 
 
 class RegisterResource(Resource):
@@ -91,7 +91,9 @@ class LoginResource(Resource):
         user = UserModel.get_by_name(data['email'], UserModel.get_users())
         # check if password match
         if user and safe_str_cmp(user['password'], data['password']):
-            access_token = create_access_token(identity=user)
+            expires = datetime.timedelta(days=1)
+            access_token = create_access_token(identity=user,
+                                               expires_delta=expires)
         
             return{"access_token": access_token, "message": "logged in"}, 200
         return {"message": "invalid credentials"}, 422
@@ -102,7 +104,7 @@ class LogoutResource(Resource):
         logout endpoint
     """
 
-    @attendant_auth
+    @both_auth
     def post(self):
         jti = get_raw_jwt()['jti']
         blacklisted = UserModel.blacklist(jti)
