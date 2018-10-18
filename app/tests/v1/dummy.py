@@ -79,9 +79,13 @@ category = [
         "description": "category has all types of apparels"
     },
     {
-        "name": "Apprels",
+        "name": "Apparels",
         "description": "category has all types of apparels"
-    }
+    },
+    {
+        "name": "electronics",
+        "description": "category has all types of electronics"
+    },
 
 
 ]
