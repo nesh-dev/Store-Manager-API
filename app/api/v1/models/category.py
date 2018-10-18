@@ -18,6 +18,5 @@ class CategoryModel(BaseModel):
     def add_category(self, data):
         return self.category.append(data)
     
-    
 
 CategoryModel = CategoryModel()

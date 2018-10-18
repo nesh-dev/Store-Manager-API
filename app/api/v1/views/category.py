@@ -1,5 +1,5 @@
 from flask_restful import reqparse, Resource
-
+import re
 # local imports
 from ..models.category import CategoryModel
 from ..middleware.middleware import attendant_auth, admin_auth, both_auth
@@ -30,6 +30,14 @@ class CategoryListResource(Resource):
         """
 
         data = CategoryListResource.parser.parse_args()
+
+        try:
+            for k, v in data.items():
+                if v == "":
+                    return {"message": "{} cannot be an empty".format(k)}
+        except:
+            pass
+
         cat_id = len(cat_list) + 1
         if CategoryModel.get_by_name(data['name'], cat_list):
             return {"message": "category with name already exist"}, 409
@@ -63,6 +71,15 @@ class CategoryResource(Resource):
         """
             edit the category
         """
+
+        # validate empty string inputs 
+        try:
+            for k, v in data.items():
+                if v == "":
+                    return {"message": "{} cannot be an empty".format(k)}
+        except:
+            pass
+
         message = "category with id {} does not exist".format(id)
         data = CategoryResource.parser.parse_args()
         item_to_edit = CategoryModel.get_by_id(id, cat_list)
