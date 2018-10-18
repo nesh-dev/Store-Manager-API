@@ -91,6 +91,8 @@ class LoginResource(Resource):
         user = UserModel.get_by_name(data['email'], UserModel.get_users())
         # check if password match
         if user and safe_str_cmp(user['password'], data['password']):
+
+            # extend expire time
             expires = datetime.timedelta(days=1)
             access_token = create_access_token(identity=user,
                                                expires_delta=expires)

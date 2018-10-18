@@ -2,6 +2,7 @@ from flask_restful import reqparse, Resource
 import re
 # local imports
 from ..models.product import ProductModel
+from ..models.category import CategoryModel
 from ..middleware.middleware import both_auth
 
 
@@ -45,16 +46,28 @@ class ProductListResource(Resource):
         Product_id = len(product_list) + 1
         if ProductModel.get_by_name(data['name'], product_list):
             return {"message": "Product with name already exist"}, 409
+        
+        # custom message for missing category 
+        message = "no category with id {}".format(data["category_id"])
 
+        # get the category name by id
+        category = CategoryModel.get_by_id(data["category_id"], 
+                                           CategoryModel.get_categories())
+
+        if category:
+            # get category name via its key  name 
+            category_name = category['name']
+        return {"message": message}, 404
+        
+        # prodct item to be saved
         Product_input = {
                          "id": Product_id, "name": data["name"],
                          "description": data["description"],
-                         "category_id": data["category_id"],
+                         "category": category_name,
                          "price": data["price"],
                          "quantity": data["quantity"],
                          "minimum_inventory": data["minimum_inventory"]
                         }
-
         ProductModel.add_product(Product_input)
         Product = ProductModel.get_by_id(Product_id, product_list)
         return Product, 201
