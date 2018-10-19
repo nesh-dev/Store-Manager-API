@@ -1,3 +1,7 @@
+"""
+Base Model has common methods
+
+"""
 
 
 class BaseModel(object):

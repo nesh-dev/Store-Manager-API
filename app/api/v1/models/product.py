@@ -1,6 +1,7 @@
 from .base import BaseModel
 """
-    Product Model
+    Product Model 
+
 """
 
 
@@ -18,6 +19,5 @@ class ProductModel(BaseModel):
     # reset to empty list
     def drop(self):
         self.products.clear()
-    
 
 ProductModel = ProductModel()

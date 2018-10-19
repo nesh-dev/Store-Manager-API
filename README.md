@@ -68,7 +68,8 @@ Use Postman to the test the following endpoints
 |                      |               |                         |                        |
 |/api/v1/products/<id> |   PUT         |edit a product           |  attendant & admin     |
 |                      |               |                         |                        |
-|/api/v1/products      |   GET         | list all products       |   attendant & admin    |        |                      |               |                         |                        |
+|/api/v1/products      |   GET         | list all products       |   attendant & admin    |
+|                      |               |                         |                        |  
 |/api/v1/sales         |   GET         |   List all sales        |  admin                 |
 |                      |               |                         |                        | 
 |/api/v1/sales         |  POST         |    create sales         |  attendant             |

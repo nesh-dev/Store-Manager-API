@@ -1,7 +1,7 @@
 from .base import BaseModel
 
 """
-Category Model
+Category Model has saved data
 
 """
 

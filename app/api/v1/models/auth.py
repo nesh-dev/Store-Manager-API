@@ -6,6 +6,8 @@ from .base import BaseModel
 
 
 class UserModel(BaseModel):
+
+    # initialize
     def __init__(self):
         self.users = []
         self.blacklist_list = []
@@ -13,6 +15,7 @@ class UserModel(BaseModel):
     def get_users(self):
         return self.users
 
+    # append user to the list
     def add_user(self, data):
         self.users.append(data)
 
@@ -21,14 +24,17 @@ class UserModel(BaseModel):
             if item['email'] == name:
                 return item
 
+    # add the blacklisted tokens
     def blacklist(self, data):
         self.blacklist_list.append(data)
 
+    # check if the token
     def check_if_blacklist(self, data):
         if data in self.blacklist_list:
             return True
         return False
 
+    # required for clearing the data
     def drop(self):
         self.users.clear()
 
