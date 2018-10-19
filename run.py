@@ -7,6 +7,12 @@ config_name = os.getenv('APP_SETTINGS')
 # create app from the config
 app = create_app(config_name)
 
+
+@app.route('/')
+def home():
+    return " Welcome Store manager API"
+
 # run the app
 if __name__ == '__main__':
     app.run()
+
