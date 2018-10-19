@@ -28,14 +28,11 @@ class SalesListResource(Resource):
 
         data = SalesListResource.parser.parse_args()
 
-        try:
-            for k, v in data.items():
-                if v == "":
-                    return {"message": "{} cannot be an empty".format(k)}
-        except:
-            pass
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
 
-        # get the attendant details 
+        # get the attendant details
 
         current_user = get_jwt_identity()
         user = current_user["email"]
@@ -47,11 +44,11 @@ class SalesListResource(Resource):
         message = "no product with id {}".format(data["product_id"])
 
         # get the category name by id
-        product = ProductModel.get_by_id(data["product_id"], 
+        product = ProductModel.get_by_id(data["product_id"],
                                          ProductModel.get_products())
 
         if product:
-            # get category name via its key  name 
+            # get category name via its key  name
             product_name = product['name']
 
             # calculate the price
@@ -60,10 +57,10 @@ class SalesListResource(Resource):
 
             # prodct item to be saved
             sale_input = {
-                                "id": sales_id, "product": product_name,
-                                "quantity": 3, "attendant": user, 
+                "id": sales_id, "product": product_name,
+                                "quantity": 3, "attendant": user,
                                 "total": total
-                            }
+            }
             SalesModel.add_sales(sale_input)
             sale = SalesModel.get_by_id(sales_id, sales_list)
             return sale, 201
@@ -83,10 +80,10 @@ class SaleResource(Resource):
         user = current_user["email"]
         role = current_user["role"]
 
-        sale = SalesModel.get_by_id(id, sales_list) 
+        sale = SalesModel.get_by_id(id, sales_list)
 
         if sale:
-            attendant = sale["attendant"] 
+            attendant = sale["attendant"]
             if (user == attendant) or (role == 2):
                 return sale, 200
             return {"message": "no authorization to view sale"}, 401
@@ -94,15 +91,13 @@ class SaleResource(Resource):
 
     @admin_allowed
     def put(self, id):
-        
+
         data = SaleResource.parser.parse_args()
-        # validate empty string inputs 
-        try:
-            for k, v in data.items():
-                if v == "":
-                    return {"message": "{} cannot be an empty".format(k)}
-        except:
-            pass
+        # validate empty string inputs
+
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
 
         message = "Sale with id {} does not exist".format(id)
         item_to_edit = SalesModel.get_by_id(id, sales_list)

@@ -48,7 +48,7 @@ class CategoryTestsEndpoints(BaseTest):
 
     # test get sigle item
     def test_get_item_by_id(self):
-        response = self.client.get('/api/v1/category/2',
+        response = self.client.get('/api/v1/category/1',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 200)
 
@@ -57,7 +57,8 @@ class CategoryTestsEndpoints(BaseTest):
         response = self.client.get('/api/v1/category/200',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('category with id 200 does not exist', str(response.data))
+        self.assertIn('category with id 200 does not exist',
+                      str(response.data))
 
     # test get item with str
     def test_get_item_by_str(self):
@@ -67,7 +68,7 @@ class CategoryTestsEndpoints(BaseTest):
 
     # test admin edit category
     def test_edit_category(self):
-        response = self.client.put('/api/v1/category/2',
+        response = self.client.put('/api/v1/category/1',
                                    data=json.dumps(category[3]),
                                    content_type='application/json',
                                    headers=self.attendant_headers)
@@ -81,7 +82,8 @@ class CategoryTestsEndpoints(BaseTest):
                                    content_type='application/json',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('category with id 200 does not exist', str(response.data))
+        self.assertIn('category with id 200 does not exist',
+                      str(response.data))
 
     # test delete
     def test_delete(self):
@@ -89,5 +91,3 @@ class CategoryTestsEndpoints(BaseTest):
                                       headers=self.admin_headers)
         self.assertEqual(response.status_code, 202)
         self.assertIn('category deleted', str(response.data))
-
-

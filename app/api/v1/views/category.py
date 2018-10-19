@@ -30,13 +30,9 @@ class CategoryListResource(Resource):
         """
 
         data = CategoryListResource.parser.parse_args()
-
-        try:
-            for k, v in data.items():
-                if v == "":
-                    return {"message": "{} cannot be an empty".format(k)}
-        except:
-            pass
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
 
         cat_id = len(cat_list) + 1
         if CategoryModel.get_by_name(data['name'], cat_list):
@@ -72,16 +68,13 @@ class CategoryResource(Resource):
             edit the category
         """
 
-        # validate empty string inputs 
-        try:
-            for k, v in data.items():
-                if v == "":
-                    return {"message": "{} cannot be an empty".format(k)}
-        except:
-            pass
+        # validate empty string inputs
+        data = CategoryResource.parser.parse_args()
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
 
         message = "category with id {} does not exist".format(id)
-        data = CategoryResource.parser.parse_args()
         item_to_edit = CategoryModel.get_by_id(id, cat_list)
         if item_to_edit:
             item_to_edit.update(data)
@@ -91,11 +84,10 @@ class CategoryResource(Resource):
     @both_roles_allowed
     def delete(self, id):
         message = "category with id {} does not exist".format(id)
-        length = CategoryModel.get_length(cat_list) 
-        excepted_length = length - 1 
+        length = CategoryModel.get_length(cat_list)
+        excepted_length = length - 1
         item_to_delete = CategoryModel.get_by_id(id, cat_list)
         if item_to_delete:
             CategoryModel.delete(id, cat_list)
             return {"message": "category deleted"}, 202
         return {"message": message}
-        

@@ -1,7 +1,8 @@
-from .base import BaseModel 
+from .base import BaseModel
 
 """
-add category data
+Category Model
+
 """
 
 
@@ -10,7 +11,7 @@ class CategoryModel(BaseModel):
     def __init__(self):
         self.category = []
 
-    # get all orders 
+    # get all orders
     def get_categories(self):
         return self.category
 
@@ -20,8 +21,7 @@ class CategoryModel(BaseModel):
 
     # reset to empty list
     def drop(self):
-        self.category = []
-    
+        self.category.clear() 
+        print(self.category)
 
 CategoryModel = CategoryModel()
-

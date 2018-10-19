@@ -74,13 +74,11 @@ class LoginResource(Resource):
         data = LoginResource.parser.parse_args()
 
         # validate email
-        try:
-            if not re.match(
-                r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
-                    data['email']):
-                return {"message": "invalid email"}, 422
-        except:
-            pass
+
+        if not re.match(
+            r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+                data['email']):
+            return {"message": "invalid email"}, 422
 
         if UserModel.get_length(UserModel.get_users()) == 0:
             return {"message": "please register"}
@@ -93,7 +91,7 @@ class LoginResource(Resource):
             expires = datetime.timedelta(days=1)
             access_token = create_access_token(identity=user,
                                                expires_delta=expires)
-        
+
             return{"access_token": access_token, "message": "logged in"}, 200
         return {"message": "invalid credentials"}, 422
 

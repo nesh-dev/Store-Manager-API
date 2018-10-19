@@ -18,7 +18,7 @@ class ProductsEndpointsTest(BaseTest):
     # test add products
     def test_add_product(self):
         response = self.client.post('/api/v1/products',
-                                    data=json.dumps(products[0]),
+                                    data=json.dumps(products[4]),
                                     content_type='application/json',
                                     headers=self.admin_headers)
         self.assertEqual(response.status_code, 201)
@@ -50,7 +50,7 @@ class ProductsEndpointsTest(BaseTest):
 
     # test get sigle item
     def test_get_product_item_by_id(self):
-        response = self.client.get('/api/v1/products/2',
+        response = self.client.get('/api/v1/products/1',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 200)
 
@@ -70,7 +70,7 @@ class ProductsEndpointsTest(BaseTest):
 
     # test admin edit product
     def test_edit_product(self):
-        response = self.client.put('/api/v1/products/4',
+        response = self.client.put('/api/v1/products/1',
                                    data=json.dumps(products[3]),
                                    content_type='application/json',
                                    headers=self.attendant_headers)
@@ -87,9 +87,8 @@ class ProductsEndpointsTest(BaseTest):
         self.assertIn('Product with id 200 does not exist', str(response.data))
 
     # test delete
-    def test_delete(self):
-        response = self.client.delete('/api/v1/products/4',
+    def test_delete_prouct(self):
+        response = self.client.delete('/api/v1/products/1',
                                       headers=self.admin_headers)
         self.assertEqual(response.status_code, 202)
         self.assertIn('Product deleted', str(response.data))
-

@@ -19,6 +19,6 @@ class SalesModel(BaseModel):
 
     # reset to empty list
     def drop(self):
-        self.sales = []
+        self.sales.clear()
 
 SalesModel = SalesModel()

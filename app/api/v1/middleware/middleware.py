@@ -28,7 +28,7 @@ def admin_allowed(function):
     return wrapper
 
 """
-    allows access for attendants only 
+    allows access for attendants only
 """
 
 
@@ -58,4 +58,4 @@ def both_roles_allowed(function):
     def wrapper(*args, **kwargs):
         return function(*args, **kwargs)
     return wrapper
-    
+

@@ -1,4 +1,4 @@
-import unittest 
+import unittest
 import json
 from ... import create_app
 
@@ -7,6 +7,7 @@ from app.api.v1.models.auth import UserModel
 from app.api.v1.models.category import CategoryModel
 from app.api.v1.models.product import ProductModel
 from app.api.v1.models.sales import SalesModel
+from app.api.v1.models.auth import UserModel
 
 
 class BaseTest(unittest.TestCase):
@@ -36,27 +37,21 @@ class BaseTest(unittest.TestCase):
         self.attendant_headers = {
             'Authorization': 'Bearer {}'.format(attendant_token),
             'Content-Type': 'application/json'
-            }
+        }
 
-        # create a test category 
-        self.client.post('/api/v1/categories',
-                         data=json.dumps(category[0]),
-                         content_type='application/json',
-                         headers=self.admin_headers)
+        # create a test category
+        CategoryModel.add_category(category[0])
 
         # create a test prodct
-        self.client.post('/api/v1/products',
-                         data=json.dumps(products[0]),
-                         content_type='application/json',
-                         headers=self.attendant_headers)
-                         
-        # create a test sale
-        self.client.post('/api/v1/sales',
-                         data=json.dumps(sales[0]),
-                         content_type='application/json',
-                         headers=self.attendant_headers)
+        ProductModel.add_product(products[0])
 
-        def tearDown(self):
+        # create a test sale
+        SalesModel.add_sales(sales[0])
+
+    def tearDown(self):
+        with self.app.app_context():
             CategoryModel.drop()
             ProductModel.drop()
             SalesModel.drop()
+            UserModel.drop()
+

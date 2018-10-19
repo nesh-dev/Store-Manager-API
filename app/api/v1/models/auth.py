@@ -1,4 +1,8 @@
 from .base import BaseModel
+"""
+    user model
+    Dictionary data is saved in a list
+"""
 
 
 class UserModel(BaseModel):
@@ -25,5 +29,7 @@ class UserModel(BaseModel):
             return True
         return False
 
+    def drop(self):
+        self.users.clear()
 
 UserModel = UserModel()

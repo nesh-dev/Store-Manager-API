@@ -14,7 +14,7 @@ class BaseModel(object):
             if item['name'] == name:
                 return item
 
-    # delete item from list 
+    # delete item from list
     def delete(self, id, data):
         item = self.get_by_id(id, data)
         return data.remove(item)
@@ -22,7 +22,3 @@ class BaseModel(object):
     def get_length(self, data):
         length = len(data)
         return length
-
-   
-
-

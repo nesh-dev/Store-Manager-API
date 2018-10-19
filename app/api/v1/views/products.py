@@ -36,37 +36,34 @@ class ProductListResource(Resource):
 
         data = ProductListResource.parser.parse_args()
 
-        try:
-            for k, v in data.items():
-                if v == "":
-                    return {"message": "{} cannot be an empty".format(k)}
-        except:
-            pass
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
 
         Product_id = len(product_list) + 1
         if ProductModel.get_by_name(data['name'], product_list):
             return {"message": "Product with name already exist"}, 409
-        
-        # custom message for missing category 
+
+        # custom message for missing category
         message = "no category with id {}".format(data["category_id"])
 
         # get the category name by id
-        category = CategoryModel.get_by_id(data["category_id"], 
+        category = CategoryModel.get_by_id(data["category_id"],
                                            CategoryModel.get_categories())
 
         if category:
-            # get category name via its key  name 
+            # get category name via its key  name
             category_name = category['name']
 
             # prodct item to be saved
             Product_input = {
-                            "id": Product_id, "name": data["name"],
-                            "description": data["description"],
-                            "category": category_name,
-                            "price": data["price"],
-                            "quantity": data["quantity"],
-                            "minimum_inventory": data["minimum_inventory"]
-                            }
+                "id": Product_id, "name": data["name"],
+                "description": data["description"],
+                "category": category_name,
+                "price": data["price"],
+                "quantity": data["quantity"],
+                "minimum_inventory": data["minimum_inventory"]
+            }
             ProductModel.add_product(Product_input)
             Product = ProductModel.get_by_id(Product_id, product_list)
             return Product, 201
@@ -100,16 +97,13 @@ class ProductResource(Resource):
             edit the Product
         """
         data = ProductResource.parser.parse_args()
-        # validate empty string inputs 
-        try:
-            for k, v in data.items():
-                if v == "":
-                    return {"message": "{} cannot be an empty".format(k)}
-        except:
-            pass
+    # validate empty string inputs
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
 
         message = "Product with id {} does not exist".format(id)
-        
+
         item_to_edit = ProductModel.get_by_id(id, product_list)
         if item_to_edit:
             item_to_edit.update(data)
@@ -119,10 +113,9 @@ class ProductResource(Resource):
     @both_roles_allowed
     def delete(self, id):
         message = "Product with id {} does not exist".format(id)
-        length = ProductModel.get_length(product_list) 
+        length = ProductModel.get_length(product_list)
         item_to_delete = ProductModel.get_by_id(id, product_list)
         if item_to_delete:
             ProductModel.delete(id, product_list)
             return {"message": "Product deleted"}, 202
-        return {"message": message}
-        
+        return {"message": message}, 404
