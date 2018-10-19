@@ -85,7 +85,7 @@ Flask, Flask Restful
 
 ### API DOCUMENTATION 
 
-[Documentation](https://fastfoodfast1.docs.apiary.io/#reference/menu/meals-1)
+[Documentation](https://documenter.getpostman.com/view/2464061/RWguvbZ1)
 
 ### HEROKU LINK
 [HEROKU API](https://store-manger.herokuapp.com/)
