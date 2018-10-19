@@ -1,6 +1,6 @@
 import pytest
 from flask import json
-from .dummy_data import sales, empty
+from .dummy_data import sales
 from .base import BaseTest
 from app.api.v1.models.sales import SalesModel
 
@@ -34,13 +34,13 @@ class SalesTestEndpoints(BaseTest):
         self.assertEqual(response.status_code, 200)
 
     # test get sigle item
-    def test_get_item_by_id(self):
+    def test_get_sale_item_by_id(self):
         response = self.client.get('/api/v1/sales/2',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 200)
 
     # test get item non-existing id
-    def test_get_item_by_non_existing_id(self):
+    def test_get_sale_item_by_non_existing_id(self):
         response = self.client.get('/api/v1/sales/200',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)

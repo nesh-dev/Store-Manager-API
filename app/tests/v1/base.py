@@ -2,7 +2,7 @@ import unittest
 import json
 from ... import create_app
 
-from .dummy_data import users, empty, category, products, sales
+from .dummy_data import users, category, products, sales
 from app.api.v1.models.auth import UserModel
 from app.api.v1.models.category import CategoryModel
 from app.api.v1.models.product import ProductModel
@@ -57,7 +57,6 @@ class BaseTest(unittest.TestCase):
                          headers=self.attendant_headers)
 
         def tearDown(self):
-            with self.app.app_context():
-                CategoryModel.drop()
-                ProductModel.drop()
-                SalesModel.drop()
+            CategoryModel.drop()
+            ProductModel.drop()
+            SalesModel.drop()

@@ -37,7 +37,7 @@ users = [
         "password": "123456", "confirm_password": "123456",  "role": 2}
 ]
 
-empty = {}
+empty_data = {}
 
 products = [
     {

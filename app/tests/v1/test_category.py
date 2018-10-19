@@ -1,7 +1,7 @@
 import unittest
 import json
 
-from .dummy_data import category, empty
+from .dummy_data import category, empty_data
 from . base import BaseTest
 from app.api.v1.models.category import CategoryModel
 

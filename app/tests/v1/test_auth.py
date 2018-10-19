@@ -1,7 +1,7 @@
 import unittest
 import json
 
-from .dummy_data import users, users_login, empty
+from .dummy_data import users, users_login, empty_data
 from .base import BaseTest
 """
     Tests for user auth
@@ -13,14 +13,15 @@ class AuthEndpointsTestCase(BaseTest):
     # sucess register
     def test_register(self):
         response = self.client.post('/api/v1/register',
-                                    data=json.dumps(users[9]),
+                                    data=json.dumps(users[0]),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertIn('registration sucessfull', str(response.data))
 
-    # test with empty data
+    # test with empty_data data
     def test_register_without_data(self):
-        response = self.client.post('/api/v1/register', data=json.dumps(empty),
+        response = self.client.post('/api/v1/register', 
+                                    data=json.dumps(empty_data),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 400)
         self.assertIn('Missing required parameter', str(response.data))
@@ -50,7 +51,7 @@ class AuthEndpointsTestCase(BaseTest):
 
     # test login without data
     def test_login_without_data(self):
-        response = self.client.post('/api/v1/login', data=json.dumps(empty),
+        response = self.client.post('/api/v1/login', data=json.dumps(empty_data),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 400)
         self.assertIn('Missing required parameter ', str(response.data))
