@@ -1,12 +1,13 @@
 # Store-Manager-API
 
+[![Build Status](https://travis-ci.org/kevinene91/Store-Manager-API.svg?branch=ch-tests-161209990)](https://travis-ci.org/kevinene91/Store-Manager-API)[![Coverage Status](https://coveralls.io/repos/github/kevinene91/Store-Manager-API/badge.svg?branch=ch-tests-161209990)](https://coveralls.io/github/kevinene91/Store-Manager-API?branch=ch-tests-161209990)
+
 Store Manager is an app that allows a store owner to manage their inventory, sales and staff. 
 
 The app has two roles the store owner and store attendant who conduct the sales. 
 
 This is the REST API For the APP 
 
-[![Build Status](https://travis-ci.org/kevinene91/Store-Manager-API.svg?branch=ch-tests-161209990)](https://travis-ci.org/kevinene91/Store-Manager-API)[![Coverage Status](https://coveralls.io/repos/github/kevinene91/Store-Manager-API/badge.svg?branch=ch-tests-161209990)](https://coveralls.io/github/kevinene91/Store-Manager-API?branch=ch-tests-161209990)
 
 
 ### Installation and Setup 
