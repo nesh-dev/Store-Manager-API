@@ -4,7 +4,7 @@ from flask_restful import reqparse, Resource
 # local imports
 from ..models.product import productModel
 from ..models.category import categoryModel
-from ..middleware.middleware import both_roles_allowed
+from ..middleware.middleware import admin_allowed, both_roles_allowed
 
 
 # all categories in list
@@ -31,7 +31,7 @@ class ProductListResource(Resource):
             return {"message": "no product saved"}, 404
         return product_list
 
-    @both_roles_allowed
+    @admin_allowed
     def post(self):
         """
             post an item
@@ -94,7 +94,7 @@ class ProductResource(Resource):
             return Product, 200
         return {"message": message}, 404
 
-    @both_roles_allowed
+    @admin_allowed
     def put(self, id):
         """
             edit the Product get by id 
@@ -114,7 +114,7 @@ class ProductResource(Resource):
             return item_to_edit, 201
         return {"message": message}, 404
 
-    @both_roles_allowed
+    @admin_allowed
     def delete(self, id):
         message = "Product with id {} does not exist".format(id)
         item_to_delete = productModel.get_by_id(id, product_list)

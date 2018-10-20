@@ -4,6 +4,7 @@ from flask import jsonify, make_response, abort
 from flask_jwt_extended import (jwt_required,
                                 verify_jwt_in_request, get_jwt_identity)
 
+
 def admin_allowed(function):
     """allows admin t access"""
     @wraps(function)
@@ -21,7 +22,6 @@ def admin_allowed(function):
             )
         return function(*args, **kwargs)
     return wrapper
-
 
 
 def attendant_allowed(function):
@@ -43,7 +43,6 @@ def attendant_allowed(function):
             )
         return function(*args, **kwargs)
     return wrapper
-
 
 
 def both_roles_allowed(function):

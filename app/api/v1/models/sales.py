@@ -31,7 +31,6 @@ class SalesModel(BaseModel):
         total = (price * quantity)
         return total
 
-   
     def drop(self):
         """
          reset to empty list

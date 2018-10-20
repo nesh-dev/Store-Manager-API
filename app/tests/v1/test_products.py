@@ -42,14 +42,12 @@ class ProductsEndpointsTest(BaseTest):
         self.assertEqual(response.status_code, 400)
         self.assertIn('Missing required parameter', str(response.data))
 
-   
     def test_get_all_products(self):
         """ test get all products"""
         response = self.client.get('/api/v1/products',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 200)
 
-    
     def test_get_product_item_by_id(self):
         """ test get sigle item """
         response = self.client.get('/api/v1/products/1',
@@ -75,7 +73,7 @@ class ProductsEndpointsTest(BaseTest):
         response = self.client.put('/api/v1/products/1',
                                    data=json.dumps(products[3]),
                                    content_type='application/json',
-                                   headers=self.attendant_headers)
+                                   headers=self.admin_headers)
         self.assertEqual(response.status_code, 201)
         self.assertIn('vest', str(response.data))
 
@@ -90,7 +88,6 @@ class ProductsEndpointsTest(BaseTest):
         self.assertEqual(response.status_code, 404)
         self.assertIn('Product with id 200 does not exist', str(response.data))
 
- 
     def test_delete_prouct(self):
         """
             test delete
