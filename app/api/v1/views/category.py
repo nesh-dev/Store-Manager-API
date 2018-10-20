@@ -21,6 +21,8 @@ class CategoryListResource(Resource):
             Return category list
         """
         cat_list = CategoryModel.get_categories()
+        if CategoryModel.get_length(cat_list) == 0:
+            return {"message": "no category saved"}, 404
         return cat_list
 
     @both_roles_allowed

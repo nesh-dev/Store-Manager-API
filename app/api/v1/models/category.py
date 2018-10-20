@@ -21,7 +21,7 @@ class CategoryModel(BaseModel):
 
     # reset to empty list
     def drop(self):
-        self.category.clear() 
+        self.category.clear()
         print(self.category)
 
 CategoryModel = CategoryModel()

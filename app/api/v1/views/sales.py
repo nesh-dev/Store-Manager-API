@@ -21,6 +21,8 @@ class SalesListResource(Resource):
 
     @admin_allowed
     def get(self):
+        if len(sales_list) == 0:
+            return {"message": "no sale saved"}
         return sales_list
 
     @attendant_allowed

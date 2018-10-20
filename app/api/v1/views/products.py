@@ -26,6 +26,8 @@ class ProductListResource(Resource):
             Return Product list
         """
         product_list = ProductModel.get_products()
+        if len(product_list) == 0:
+            return {"message": "no product saved"}
         return product_list
 
     @both_roles_allowed
