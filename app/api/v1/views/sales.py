@@ -22,14 +22,15 @@ class SalesListResource(Resource):
     @admin_allowed
     def get(self):
         if len(sales_list) == 0:
-            return {"message": "no sale saved"}
+            return {"message": "no sale saved"}, 404
         return sales_list
 
     @attendant_allowed
     def post(self):
 
         data = SalesListResource.parser.parse_args()
-
+        
+        # validate all inputs not to be empty 
         for k, v in data.items():
             if v == "":
                 return {"message": "{} cannot be an empty".format(k)}
@@ -56,11 +57,13 @@ class SalesListResource(Resource):
             # calculate the price
             price = product["price"]
             total = SalesModel.calculate_total(price, data['quantity'])
-
+            print(price)
+            print(data['quantity'])
             # prodct item to be saved
             sale_input = {
                 "id": sales_id, "product": product_name,
-                                "quantity": 3, "attendant": user,
+                                "quantity": data['quantity'], 
+                                "attendant": user,
                                 "total": total
             }
             SalesModel.add_sales(sale_input)

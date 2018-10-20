@@ -30,7 +30,7 @@ class CategoryListResource(Resource):
         """
             post an item
         """
-
+        
         data = CategoryListResource.parser.parse_args()
         for k, v in data.items():
             if v == "":
