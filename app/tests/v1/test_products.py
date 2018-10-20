@@ -9,9 +9,7 @@ class ProductsEndpointsTest(BaseTest):
         Test products resource
     """
 
-    
     def test_add_product(self):
-
         """
             test add products
         """
@@ -22,7 +20,6 @@ class ProductsEndpointsTest(BaseTest):
         self.assertEqual(response.status_code, 201)
         self.assertIn('trouser', str(response.data))
 
-    
     def test_add_same_product(self):
         """"test post same product"""
         response = self.client.post('/api/v1/products',
@@ -32,7 +29,6 @@ class ProductsEndpointsTest(BaseTest):
         self.assertEqual(response.status_code, 409)
         self.assertIn('Product with name already exist', str(response.data))
 
-   
     def test_product_add_missing_field(self):
         """ test post missing field"""
         response = self.client.post('/api/v1/products',
@@ -53,7 +49,7 @@ class ProductsEndpointsTest(BaseTest):
         response = self.client.get('/api/v1/products/1',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 200)
-    
+
     def test_product_get_nonexistent(self):
         """" test get item non-existing id """
         response = self.client.get('/api/v1/products/200',

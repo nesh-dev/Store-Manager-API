@@ -57,3 +57,4 @@ class BaseTest(unittest.TestCase):
             productModel.drop()
             salesModel.drop()
             userModel.drop()
+

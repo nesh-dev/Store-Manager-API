@@ -4,7 +4,6 @@ from .dummy_data import category
 from . base import BaseTest
 
 
-
 class CategoryTestsEndpoints(BaseTest):
 
     """
@@ -22,7 +21,6 @@ class CategoryTestsEndpoints(BaseTest):
         self.assertEqual(response.status_code, 201)
         self.assertIn('electronics', str(response.data))
 
-    
     def test_add_same_category(self):
         """
             test post same category
@@ -76,7 +74,7 @@ class CategoryTestsEndpoints(BaseTest):
         response = self.client.put('/api/v1/category/1',
                                    data=json.dumps(category[3]),
                                    content_type='application/json',
-                                   headers=self.attendant_headers)
+                                   headers=self.admin_headers)
         self.assertEqual(response.status_code, 201)
         self.assertIn('Apparels', str(response.data))
 
@@ -85,7 +83,7 @@ class CategoryTestsEndpoints(BaseTest):
         response = self.client.put('/api/v1/category/200',
                                    data=json.dumps(category[3]),
                                    content_type='application/json',
-                                   headers=self.attendant_headers)
+                                   headers=self.admin_headers)
         self.assertEqual(response.status_code, 404)
         self.assertIn('category with id 200 does not exist',
                       str(response.data))
