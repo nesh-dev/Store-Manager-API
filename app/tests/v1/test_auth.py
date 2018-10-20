@@ -1,17 +1,18 @@
-import unittest
-import json
 
-from .dummy_data import users, users_login, empty_data
+import json
+from .dummy_data import users, empty_data
 from .base import BaseTest
-"""
-    Tests for user auth
-"""
+
 
 
 class AuthEndpointsTestCase(BaseTest):
+    """
+    Tests for user auth
+    """
 
-    # sucess register
     def test_register(self):
+        """sucess register"""
+
         response = self.client.post('/api/v1/register',
                                     data=json.dumps(users[10]),
                                     content_type='application/json')

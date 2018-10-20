@@ -8,7 +8,7 @@ from werkzeug.security import safe_str_cmp
 import re
 
 # local imports
-from ..models.auth import UserModel
+from ..models.auth import userModel
 from ..middleware.middleware import both_roles_allowed
 
 
@@ -46,9 +46,9 @@ class RegisterResource(Resource):
             return {"message": "passwords do not match"}
 
         # increment Id
-        user_id = UserModel.get_length(UserModel.get_users()) + 1
+        user_id = userModel.get_length(userModel.get_users()) + 1
 
-        if UserModel.get_by_name(data['email'], UserModel.get_users()):
+        if userModel.get_by_name(data['email'], userModel.get_users()):
             return {"message": "user with email already registred"}, 409
 
         user_data = {
@@ -56,8 +56,8 @@ class RegisterResource(Resource):
             "email": data["email"], "password": data["password"],
             "role": data["role"]}
 
-        UserModel.add_user((user_data))
-        user = UserModel.get_by_id(user_id, UserModel.get_users())
+        userModel.add_user((user_data))
+        user = userModel.get_by_id(user_id, userModel.get_users())
         return {"message": "registration sucessfull"}, 201
 
 
@@ -80,10 +80,10 @@ class LoginResource(Resource):
                 data['email']):
             return {"message": "invalid email"}, 422
 
-        if UserModel.get_length(UserModel.get_users()) == 0:
+        if userModel.get_length(userModel.get_users()) == 0:
             return {"message": "please register"}
         # check if user exists
-        user = UserModel.get_by_name(data['email'], UserModel.get_users())
+        user = userModel.get_by_name(data['email'], userModel.get_users())
         # check if password match
         if user and safe_str_cmp(user['password'], data['password']):
 
@@ -104,5 +104,5 @@ class LogoutResource(Resource):
     @both_roles_allowed
     def post(self):
         jti = get_raw_jwt()['jti']
-        blacklisted = UserModel.blacklist(jti)
+        blacklisted = userModel.blacklist(jti)
         return {"message": "logged out"}, 200

@@ -1,27 +1,36 @@
+
+""" inherits common methods """
 from .base import BaseModel
 
-"""
-Category Model has saved data
 
-"""
+class Categorymodel(BaseModel):
 
+    """
+        Category Model has saved data
 
-class CategoryModel(BaseModel):
+    """
 
     def __init__(self):
         self.category = []
 
-    # get all orders
     def get_categories(self):
+        """
+            get all categories
+        """
         return self.category
 
-    # add a category in list
     def add_category(self, data):
+        """
+            add category items
+        """
         return self.category.append(data)
 
-    # reset to empty list
     def drop(self):
+        """
+            used in tests to clear data in categories
+        """
         self.category.clear()
         print(self.category)
 
-CategoryModel = CategoryModel()
+
+categoryModel = Categorymodel()

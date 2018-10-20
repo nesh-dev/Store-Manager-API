@@ -1,16 +1,19 @@
+""" use unittesting module as testing framework"""
 import unittest
 import json
-from ... import create_app
-
+from app.api.v1.models.auth import userModel
+from app.api.v1.models.category import categoryModel
+from app.api.v1.models.product import productModel
+from app.api.v1.models.sales import salesModel
 from .dummy_data import users, category, products, sales
-from app.api.v1.models.auth import UserModel
-from app.api.v1.models.category import CategoryModel
-from app.api.v1.models.product import ProductModel
-from app.api.v1.models.sales import SalesModel
-from app.api.v1.models.auth import UserModel
+
+from ... import create_app
 
 
 class BaseTest(unittest.TestCase):
+    """
+        Base Class for all tests to inherit
+    """
 
     def setUp(self):
         self.app = create_app(config_name='testing')
@@ -40,18 +43,17 @@ class BaseTest(unittest.TestCase):
         }
 
         # create a test category
-        CategoryModel.add_category(category[0])
+        categoryModel.add_category(category[0])
 
         # create a test prodct
-        ProductModel.add_product(products[0])
+        productModel.add_product(products[0])
 
         # create a test sale
-        SalesModel.add_sales(sales[0])
+        salesModel.add_sales(sales[0])
 
     def tearDown(self):
         with self.app.app_context():
-            CategoryModel.drop()
-            ProductModel.drop()
-            SalesModel.drop()
-            UserModel.drop()
-
+            categoryModel.drop()
+            productModel.drop()
+            salesModel.drop()
+            userModel.drop()
