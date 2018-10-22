@@ -93,7 +93,8 @@ Flask, Flask Restful
 
 ### API DOCUMENTATION 
 
-[Documentation](https://documenter.getpostman.com/view/2464061/RWguvbZ1)
+[PostMan Documentation](https://documenter.getpostman.com/view/2464061/RWguvbZ1)
+[Apiary Documentation](https://storemanagerv1.docs.apiary.io/#introduction/authentication)
 
 ### HEROKU LINK
 [HEROKU API](https://store-manger.herokuapp.com/)
