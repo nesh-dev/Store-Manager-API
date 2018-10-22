@@ -54,34 +54,40 @@ Use Postman to the test the following endpoints
 
 # API Endpoints
 
-|   # Endpoint         |  # Methods    | # Description           |Auth Required           |
-|   -----------        | ----------    | -----------------       | ------------           |
-|/api/v1/caregories    |   GET         |  list all categories    | attendant & admin      |
-|                      |               |                         |                        | 
-|/api/v1/categories    |   POST        | add  a new category     |  attendant & admin     |
-|                      |               |                         |                        |
-|/api/v1/category/<id> |  PUT          |edit category            |  attendant & admin     |
-|                      |               |                         |                        |
-|/api/v1/category/<id> |   GET         | get a specific category |  attendant & ad  min   |
-|                      |               |                         |                        |
-|/api/v1/products      |   POST        | add  a new product      |  attendant & admin     |
-|                      |               |                         |                        |
-|/api/v1/products/<id> |   PUT         |edit a product           |  attendant & admin     |
-|                      |               |                         |                        |
-|/api/v1/products      |   GET         | list all products       |   attendant & admin    |
-|                      |               |                         |                        |  
-|/api/v1/sales         |   GET         |   List all sales        |  admin                 |
-|                      |               |                         |                        | 
-|/api/v1/sales         |  POST         |    create sales         |  attendant             |
-|                      |               |                         |                        |
-|/api/v1/sales/<id>    |  GET          |   Get a sale            |  admin and sale creator|
-|                      |               |                         |                        |
-|/api/v1/sales/<id>    |  DEL          |    Delete a sale item   |  admin                 |
-|                      |               |                         |                        |  
-|/api/v1/sales/<id>    |  PUT          |    Edit a sale record   |   admin                |
-|                      |               |                         |                        |
-
-### CREATED WITH
+|   # Endpoint              |  # Methods    | # Description           |Auth Required           |
+|   -----------             | ----------    | -----------------       | ------------           |
+|/api/v1/caregories         |   GET         |  list all categories    | attendant & admin      |
+|                           |               |                         |                        | 
+|/api/v1/categories         |   POST        | add  a new category     |  admin                 |
+|                           |               |                         |                        |
+|/api/v1/category/<id>      |  PUT          |edit category            |  admin                 |
+|                           |               |                         |                        |
+|/api/v1/category/<id>      |   GET         | get a specific category |  attendant & admin     |
+|                           |               |                         |                        |
+|/api/v1/products           |   POST        | add  a new product      |  admin                 |
+|                           |               |                         |                        |
+|/api/v1/products/<id>      |   PUT         |edit a product           |   admin                |
+|                           |               |                         |                        |
+|/api/v1/products           |   GET         | list all products       |   attendant & admin    |
+|                           |               |                         |                        |
+|/api/v1/products/<id>      |   GET         | Get a specific product  |   attendant & admin    |
+|                           |               |                         |                        |
+|url/category/products/<id> |   POST        | add products to category|   attendant            | 
+|                           |               |                         |                        |
+|url/category/products/<id> |   GET         | all product in category |   attendant and admin  | 
+|                           |               |                         |                        |  
+|/api/v1/sales              |   GET         |   List all sales        |  admin                 |
+|                           |               |                         |                        | 
+|/api/v1/sales              |  POST         |    create sales         |  attendant             |
+|                           |               |                         |                        |
+|/api/v1/sales/<id>         |  GET          |   Get a sale            |  admin and sale creator|
+|                           |               |                         |                        |
+|/api/v1/sales/<id>         |  DEL          |    Delete a sale item   |  admin                 |
+|                           |               |                         |                        |  
+|/api/v1/sales/<id>         |  PUT          |    Edit a sale record   |   admin                |
+|                           |               |                         |                        |
+ 
+### CREATED WITH 
 
 Flask, Flask Restful 
 
