@@ -4,7 +4,6 @@ from .dummy_data import users, empty_data
 from .base import BaseTest
 
 
-
 class AuthEndpointsTestCase(BaseTest):
     """
     Tests for user auth
