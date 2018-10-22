@@ -9,7 +9,7 @@ import re
 
 # local imports
 from ..models.auth import userModel
-from ..middleware.middleware import both_roles_allowed
+from ...middleware.middleware import both_roles_allowed
 
 
 class RegisterResource(Resource):
