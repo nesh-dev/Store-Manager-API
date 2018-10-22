@@ -4,7 +4,6 @@ from .dummy_data import sales
 from .base import BaseTest
 
 
-
 class SalesTestEndpoints(BaseTest):
 
     """
