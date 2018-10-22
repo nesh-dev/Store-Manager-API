@@ -24,3 +24,11 @@ def create_database_tables():
         cursor.execute(table)
         connection.commit()
 
+
+def drop_all_tables():
+    """drop all tables"""
+    connection = create_connection()
+    cursor = connection.cursor()
+    for drop in tables_to_drop:
+        cursor.execute(drop)
+        connection.commit()

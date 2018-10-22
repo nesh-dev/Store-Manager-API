@@ -77,9 +77,9 @@ drop_sales = """ DROP TABLE IF EXISTS sales CASCADE
 """
 drop_blacklisted_tokens_table = """ DROP TABLE IF EXISTS blacklisted CASCADE
 """
-drop_sale_item = """ DROP TABLE IF EXISTS sale_item CASCADE
+drop_sale_item = """ DROP TABLE IF EXISTS sale_items CASCADE
 """
-drop_categories_items = """ DROP TABLE IF EXISTS categories_items CASCADE
+drop_categories_items = """ DROP TABLE IF EXISTS category_items CASCADE
 """
 
 
