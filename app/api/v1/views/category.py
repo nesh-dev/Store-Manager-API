@@ -2,18 +2,20 @@
 from flask_restful import reqparse, Resource
 # local imports
 from ..models.category import categoryModel
-from ..middleware.middleware import admin_allowed, both_roles_allowed
+from ..models.product import productModel
+from ..middleware.middleware import (admin_allowed, both_roles_allowed,
+                                     attendant_allowed)
 
 
 # all categories in list
 cat_list = categoryModel.get_categories()
+product_list = productModel.get_products()
 
 
 class CategoryListResource(Resource):
     """
         Categories get all and post
     """
-
     parser = reqparse.RequestParser()
     parser.add_argument("name", type=str, required=True)
     parser.add_argument("description", type=str, required=True)
@@ -104,3 +106,40 @@ class CategoryResource(Resource):
             categoryModel.delete(id, cat_list)
             return {"message": "category deleted"}, 202
         return {"message": message}
+
+
+class Categoryproducts(Resource):
+    """" add products to category
+
+    """
+
+    parser = reqparse.RequestParser()
+    parser.add_argument("category_id", type=int, required=True)
+    parser.add_argument("product_id", type=int, required=True)
+
+    @attendant_allowed
+    def post(self):
+        """ add products by getting their id """
+        data = Categoryproducts.parser.parse_args()
+        product_id = data['product_id']
+        category_id = data['category_id']
+        product = productModel.get_by_id(product_id, product_list)
+        category = categoryModel.get_by_id(category_id, cat_list)
+        product_message = "no product with id".format(product_id)
+        category_message = "no category with id".format(category_id)
+
+        if category:
+            if product:
+                product_input = {"product_name": product['name'],
+                                 "category_name": category['name']}
+                categoryModel.add_products(product_input)
+                return product_input, 201
+            return {"message": product_message}, 404
+        return {"message": category_message}, 404
+
+    def get(self):
+        """ get all products in the category category """
+        products = categoryModel.get_product_in_cat()
+        if not products:
+            return {"message": "no products assigned to the category"}, 404
+        return products

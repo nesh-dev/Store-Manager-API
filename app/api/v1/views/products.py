@@ -17,7 +17,6 @@ class ProductListResource(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("name", type=str, required=True)
     parser.add_argument("description", type=str, required=True)
-    parser.add_argument("category_id", type=int, required=True)
     parser.add_argument("price", type=int, required=True)
     parser.add_argument("quantity", type=int, required=True)
     parser.add_argument("minimum_inventory", type=int, required=True)
@@ -48,29 +47,17 @@ class ProductListResource(Resource):
             return {"message": "Product with name already exist"}, 409
 
         # custom message for missing category
-        message = "no category with id {}".format(data["category_id"])
-
-        # get the category name by id
-        category = categoryModel.get_by_id(data["category_id"],
-                                           categoryModel.get_categories())
-
-        if category:
-            # get category name via its key  name
-            category_name = category['name']
-
-            # prodct item to be saved
-            Product_input = {
-                "id": Product_id, "name": data["name"],
-                "description": data["description"],
-                "category": category_name,
-                "price": data["price"],
-                "quantity": data["quantity"],
-                "minimum_inventory": data["minimum_inventory"]
-            }
-            productModel.add_product(Product_input)
-            Product = productModel.get_by_id(Product_id, product_list)
-            return Product, 201
-        return {"message": message}, 404
+        # prodct item to be saved
+        Product_input = {
+            "id": Product_id, "name": data["name"],
+            "description": data["description"],
+            "price": data["price"],
+            "quantity": data["quantity"],
+            "minimum_inventory": data["minimum_inventory"]
+        }
+        productModel.add_product(Product_input)
+        Product = productModel.get_by_id(Product_id, product_list)
+        return Product, 201
 
 
 class ProductResource(Resource):
