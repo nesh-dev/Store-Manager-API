@@ -1,15 +1,16 @@
 
 from functools import wraps
-from flask import request
 from flask import jsonify, make_response, abort
 from flask_jwt_extended import (jwt_required,
                                 verify_jwt_in_request, get_jwt_identity)
 
 
-def admin_auth(fn):
-    @wraps(fn)
+def admin_allowed(function):
+    """allows admin t access"""
+    @wraps(function)
     @jwt_required
     def wrapper(*args, **kwargs):
+        """wrapper for the function"""
         verify_jwt_in_request()
         claims = get_jwt_identity()
         if claims['role'] != 2:
@@ -19,14 +20,18 @@ def admin_auth(fn):
                     401
                 )
             )
-        return fn(*args, **kwargs)
+        return function(*args, **kwargs)
     return wrapper
 
 
-def attendant_auth(fn):
-    @wraps(fn)
+def attendant_allowed(function):
+    """
+    allows access for attendants only
+    """
+    @wraps(function)
     @jwt_required
     def wrapper(*args, **kwargs):
+        """wrapper for the function"""
         verify_jwt_in_request()
         claims = get_jwt_identity()
         if claims['role'] != 1:
@@ -36,14 +41,15 @@ def attendant_auth(fn):
                     401
                 )
             )
-        return fn(*args, **kwargs)
+        return function(*args, **kwargs)
     return wrapper
 
 
-def both_auth(fn):
-    @wraps(fn)
+def both_roles_allowed(function):
+    """ this allows both the attendant and admin to have access"""
+    @wraps(function)
     @jwt_required
     def wrapper(*args, **kwargs):
-        return fn(*args, **kwargs)
+        """wrapper for the function"""
+        return function(*args, **kwargs)
     return wrapper
-    

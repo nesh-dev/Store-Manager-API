@@ -8,8 +8,8 @@ from werkzeug.security import safe_str_cmp
 import re
 
 # local imports
-from ..models.auth import UserModel
-from ..middleware.middleware import both_auth
+from ..models.auth import userModel
+from ..middleware.middleware import both_roles_allowed
 
 
 class RegisterResource(Resource):
@@ -31,27 +31,24 @@ class RegisterResource(Resource):
         username = ''.join(data['username'].split())
         role_id = [1, 2]
 
-        try:
-            if not re.match(
-                r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
-                    data['email']):
-                return {"message": "invalid email"}, 422
-            elif len(data['password']) < 6:
-                return {"message":
-                        "password should atleast six characters long"}
-            elif data['role'] not in role_id:
-                return {"message": "role id should either be 1 or 2"}
-            elif data['username'] == "":
-                return {"message": "username should not be empty"}
-            elif data['confirm_password'] != data["password"]:
-                return {"message": "passwords do not match"}
-        except:
-            pass
+        if not re.match(
+            r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+                data['email']):
+            return {"message": "invalid email"}, 422
+        elif len(data['password']) < 6:
+            return {"message":
+                    "password should atleast six characters long"}
+        elif data['role'] not in role_id:
+            return {"message": "role id should either be 1 or 2"}
+        elif data['username'] == "":
+            return {"message": "username should not be empty"}
+        elif data['confirm_password'] != data["password"]:
+            return {"message": "passwords do not match"}
 
         # increment Id
-        user_id = UserModel.get_length(UserModel.get_users()) + 1
+        user_id = userModel.get_length(userModel.get_users()) + 1
 
-        if UserModel.get_by_name(data['email'], UserModel.get_users()):
+        if userModel.get_by_name(data['email'], userModel.get_users()):
             return {"message": "user with email already registred"}, 409
 
         user_data = {
@@ -59,8 +56,8 @@ class RegisterResource(Resource):
             "email": data["email"], "password": data["password"],
             "role": data["role"]}
 
-        UserModel.add_user((user_data))
-        user = UserModel.get_by_id(user_id, UserModel.get_users())
+        userModel.add_user((user_data))
+        user = userModel.get_by_id(user_id, userModel.get_users())
         return {"message": "registration sucessfull"}, 201
 
 
@@ -77,24 +74,24 @@ class LoginResource(Resource):
         data = LoginResource.parser.parse_args()
 
         # validate email
-        try:
-            if not re.match(
-                r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
-                    data['email']):
-                return {"message": "invalid email"}, 422
-        except:
-            pass
 
-        if UserModel.get_length(UserModel.get_users()) == 0:
+        if not re.match(
+            r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+                data['email']):
+            return {"message": "invalid email"}, 422
+
+        if userModel.get_length(userModel.get_users()) == 0:
             return {"message": "please register"}
         # check if user exists
-        user = UserModel.get_by_name(data['email'], UserModel.get_users())
+        user = userModel.get_by_name(data['email'], userModel.get_users())
         # check if password match
         if user and safe_str_cmp(user['password'], data['password']):
+
+            # extend expire time
             expires = datetime.timedelta(days=1)
             access_token = create_access_token(identity=user,
                                                expires_delta=expires)
-        
+
             return{"access_token": access_token, "message": "logged in"}, 200
         return {"message": "invalid credentials"}, 422
 
@@ -104,8 +101,8 @@ class LogoutResource(Resource):
         logout endpoint
     """
 
-    @both_auth
+    @both_roles_allowed
     def post(self):
         jti = get_raw_jwt()['jti']
-        blacklisted = UserModel.blacklist(jti)
+        blacklisted = userModel.blacklist(jti)
         return {"message": "logged out"}, 200
