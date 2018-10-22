@@ -3,8 +3,11 @@ from flask import Flask
 from flask_restful import Api
 from config import app_config
 
+# local imports
 from .jwt_instance import jwt
 from .api.v1 import apiv1
+from .api.v2 import apiv2
+from .api.v2.database.database_connection import create_database_tables
 
 
 def create_app(config_name):
@@ -16,6 +19,9 @@ def create_app(config_name):
     app.config.from_object(app_config[config_name])
 
     jwt.init_app(app)
+
+    with app.app_context():
+        create_database_tables()
 
     app.register_blueprint(apiv1)
     return app
