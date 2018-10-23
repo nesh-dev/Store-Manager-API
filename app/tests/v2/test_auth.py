@@ -44,7 +44,8 @@ class AuthEndpointsTestCase(BaseTest):
 
     # test sucess login
     def test_login(self):
-        response = self.client.post('/api/v2/auth/login', data=json.dumps(users[0]),
+        response = self.client.post('/api/v2/auth/login', 
+                                    data=json.dumps(users[0]),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertIn('logged in', str(response.data))
@@ -59,28 +60,32 @@ class AuthEndpointsTestCase(BaseTest):
 
     # test login invalid email
     def test_login_invalid_password(self):
-        response = self.client.post('/api/v2/auth/login', data=json.dumps(users[5]),
+        response = self.client.post('/api/v2/auth/login', 
+                                    data=json.dumps(users[5]),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 422)
         self.assertIn('passwords do not match', str(response.data))
 
     # test login missing email
     def test_login_missing_email(self):
-        response = self.client.post('/api/v2/auth/login', data=json.dumps(users[6]),
+        response = self.client.post('/api/v2/auth/login', 
+                                    data=json.dumps(users[6]),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 400)
         self.assertIn('Missing required parameter ', str(response.data))
 
     # test login missing password
     def test_login_missing_password(self):
-        response = self.client.post('/api/v2/auth/login', data=json.dumps(users[7]),
+        response = self.client.post('/api/v2/auth/login', 
+                                    data=json.dumps(users[7]),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 400)
         assert 'Missing required parameter ', str(response.data)
 
     # test login mismatching password
     def test_login_invalid_password(self):
-        response = self.client.post('/api/v2/auth/login', data=json.dumps(users[8]),
+        response = self.client.post('/api/v2/auth/login', 
+                                    data=json.dumps(users[8]),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 422)
         self.assertIn('username should not be empty', str(response.data))
