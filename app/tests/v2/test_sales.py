@@ -52,7 +52,6 @@ class SalesTestEndpoints(BaseTest):
         self.assertEqual(response.status_code, 404)
         self.assertIn('sale with id 200 does not exist', str(response.data))
 
-    
     def test_get_item_by_str(self):
         """test get item with str"""
         response = self.client.get('/api/v2/sales/"20"',
