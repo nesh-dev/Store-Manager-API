@@ -11,6 +11,7 @@ class BaseModel(object):
         cursor = connection.cursor()
         cursor.execute(query)
         connection.commit()
+        cursor.close()
 
     def get_all(self, table):
         """method used to get all items in item"""
