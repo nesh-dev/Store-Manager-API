@@ -3,6 +3,8 @@ import unittest
 
 from .dummy_data import users
 from ... import create_app
+from ...api.v2.database.database_connection import (create_database_tables, 
+                                                    drop_all_tables)
 
 
 class BaseTest(unittest.TestCase):
@@ -11,6 +13,9 @@ class BaseTest(unittest.TestCase):
     def setUp(self):
         self.app = create_app(config_name='testing')
         self.client = self.app.test_client()
+
+        with self.app.app_context():
+            create_database_tables()
 
         # get admin tokens 
         self.client.post('/api/v2/auth/signup', json=users[0])
@@ -35,4 +40,5 @@ class BaseTest(unittest.TestCase):
 
         def tearDown(self):
             """teardown all the test data"""
-            pass
+            with self.app.app_context():
+                drop_all_tables()
