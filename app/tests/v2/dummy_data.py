@@ -27,3 +27,38 @@ users = [
     {"username": "", "email": "munenedeveloper@gmail.com",
      "password": "123456", "confirm_password": "123456"},
      ]
+
+"""products dummy data"""
+
+products = [
+    {
+        "name": "shirt", "description": "A white polo shirt",
+        "price": 100, "category_id": 1, "quantity": 2,
+        "minimum_inventory": 100
+    },
+
+    {
+        "description": "A white polo shirt", "price": 100,
+        "category_id": 1, "quantity": 2,
+        "minimum_inventory": 100
+    },
+
+    {
+
+        "name": "shirt", "description": "A white polo shirt",
+        "price": "100", "category_id": 1, "quantity": 2,
+        "minimum_inventory": 100
+    },
+
+    {
+        "name": "vest", "description": "A white polo shirt",
+        "price": 100, "category_id": 1, "quantity": 2,
+        "minimum_inventory": 100
+    },
+    {
+        "name": "trouser", "description": "A white denim trouser",
+        "price": 100, "category_id": 1, "quantity": 2,
+        "minimum_inventory": 100
+    }
+
+]
