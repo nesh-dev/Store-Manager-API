@@ -1,5 +1,6 @@
 
 from ..database.database_connection import create_connection
+from psycopg2.extras import RealDictCursor
 
 
 class BaseModel(object):
@@ -8,7 +9,7 @@ class BaseModel(object):
     def save_query(self, query):
         """save queries"""
         connection = create_connection()
-        cursor = connection.cursor()
+        cursor = connection.cursor(cursor_factory=RealDictCursor)
         cursor.execute(query)
         connection.commit()
         cursor.close()
