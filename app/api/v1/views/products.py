@@ -4,7 +4,7 @@ from flask_restful import reqparse, Resource
 # local imports
 from ..models.product import productModel
 from ..models.category import categoryModel
-from ..middleware.middleware import admin_allowed, both_roles_allowed
+from ...middleware.middleware import admin_allowed, both_roles_allowed
 
 
 # all categories in list

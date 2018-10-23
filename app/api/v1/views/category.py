@@ -3,8 +3,8 @@ from flask_restful import reqparse, Resource
 # local imports
 from ..models.category import categoryModel
 from ..models.product import productModel
-from ..middleware.middleware import (admin_allowed, both_roles_allowed,
-                                     attendant_allowed)
+from ...middleware.middleware import (admin_allowed, both_roles_allowed,
+                                      attendant_allowed)
 
 
 # all categories in list

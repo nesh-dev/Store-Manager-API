@@ -5,9 +5,9 @@ from flask_jwt_extended import get_jwt_identity
 # local imports
 from ..models.sales import salesModel
 from ..models.product import productModel
-from ..middleware.middleware import (both_roles_allowed,
-                                     admin_allowed,
-                                     attendant_allowed)
+from ...middleware.middleware import (both_roles_allowed,
+                                      admin_allowed,
+                                      attendant_allowed)
 # get all sales in list
 sales_list = salesModel.get_sales()
 
