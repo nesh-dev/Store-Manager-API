@@ -24,4 +24,5 @@ def create_app(config_name):
         create_database_tables()
 
     app.register_blueprint(apiv1)
+    app.register_blueprint(apiv2)
     return app

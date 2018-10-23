@@ -1,16 +1,20 @@
-from .base import BaseModel 
 
+from psycopg2.extras import RealDictCursor
+from .base import BaseModel 
+from ..database.database_connection import create_connection
 
 class UserModel(BaseModel):
     """ UserModel to handle authentication """
-    ADMIN = 2
-    ATTENDANT = 1
+    admin = 2
+    attendant = 1
 
-    def __init__(self, user_name, email, password, role):
+    def __init__(self, username, email, password):
         self.username = username
         self.email = email
         self.password = password
-        self.role = ATTENDANT
+        self.role = 1
+        self.connection = create_connection()
+        self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 
     def create_user(self):
         """ insert user data in the users table """
