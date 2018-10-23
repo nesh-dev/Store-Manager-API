@@ -139,4 +139,4 @@ sales = [
 
 ]
 
-category_product = [{"product_id":1, "category_id":"1"}]
+category_product = [{"product_id": 1, "category_id": "1"}]

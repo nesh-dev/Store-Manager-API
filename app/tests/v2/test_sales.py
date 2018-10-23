@@ -1,6 +1,6 @@
 
 import json
-from .dummy_data import sales
+from .dummy_data import sale_items
 from .base import BaseTest
 
 
@@ -14,7 +14,8 @@ class SalesTestEndpoints(BaseTest):
         """
           test add saless
         """
-        response = self.client.post('/api/v2/sales', data=json.dumps(sales[0]),
+        response = self.client.post('/api/v2/sales', 
+                                    data=json.dumps(sale_items[0]),
                                     content_type='application/json',
                                     headers=self.attendant_headers)
         self.assertEqual(response.status_code, 201)
@@ -22,7 +23,8 @@ class SalesTestEndpoints(BaseTest):
 
     def test_add_missing_field(self):
         """ test post missing field """
-        response = self.client.post('/api/v2/sales', data=json.dumps(sales[1]),
+        response = self.client.post('/api/v2/sales', 
+                                    data=json.dumps(sale_items[1]),
                                     content_type='application/json',
                                     headers=self.attendant_headers)
         self.assertEqual(response.status_code, 400)
@@ -60,7 +62,7 @@ class SalesTestEndpoints(BaseTest):
     def test_edit_sales(self):
         """test admin edit sales"""
         response = self.client.put('/api/v2/sales/1',
-                                   data=json.dumps(sales[3]),
+                                   data=json.dumps(sale_items[3]),
                                    content_type='application/json',
                                    headers=self.admin_headers)
         self.assertEqual(response.status_code, 201)
@@ -69,7 +71,7 @@ class SalesTestEndpoints(BaseTest):
     def test_attendant_edit_sales(self):
         """test attendant edit sales"""
         response = self.client.put('/api/v2/sales/1',
-                                   data=json.dumps(sales[3]),
+                                   data=json.dumps(sale_items[3]),
                                    content_type='application/json',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 401)
@@ -79,7 +81,7 @@ class SalesTestEndpoints(BaseTest):
     def test_edit_non_existing_item(self):
         """# test edit nonexisting item"""
         response = self.client.put('/api/v2/sales/200',
-                                   data=json.dumps(sales[3]),
+                                   data=json.dumps(sale_items[3]),
                                    content_type='application/json',
                                    headers=self.admin_headers)
         self.assertEqual(response.status_code, 404)
