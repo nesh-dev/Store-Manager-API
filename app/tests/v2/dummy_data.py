@@ -62,3 +62,31 @@ products = [
     }
 
 ]
+
+
+category = [
+    {
+        "name": "clothes",
+        "description": "category has all types of apparels"
+    },
+    {
+
+        "description": "category has all types of apparels"
+    },
+    {
+        "name": 1,
+        "description": "category has all types of apparels"
+    },
+    {
+        "name": "Apparels",
+        "description": "category has all types of apparels"
+    },
+    {
+        "name": "electronics",
+        "description": "category has all types of electronics"
+    },
+
+
+]
+
+category_product = [{"product_id": 1, "category_id": "1"}]
