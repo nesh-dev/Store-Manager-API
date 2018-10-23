@@ -15,8 +15,12 @@ class UserModel(BaseModel):
     def create_user(self):
         """ insert user data in the users table """
         query = """ INSERT into users (user_name, email,
-         password, role) values({}, {}, {}, {}) 
+         password, role) values('{}', '{}', '{}', '{}') 
          """.format(self.username, self.email, self.password, 
                     self.role)
         self.save_query(query)
 
+    def change_role(self, id):
+        query = """ UPDATE  users SET role='{}' WHERE user_id='{}' 
+        """.format(self.role, id)
+        self.save_query(query)

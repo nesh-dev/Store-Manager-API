@@ -15,6 +15,7 @@ class Blacklisted(BaseModel):
         self.save_query(query)
 
     def check_if_blacklist(self):
+        """ check if the token has been blacklisted """
         connection, response = create_connection(), None
         cursor = connection.cursor(cursor_factory=RealDictCursor)
         query = """SELECT * FROM blacklisted where token ={} 
