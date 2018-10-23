@@ -83,7 +83,7 @@ drop_categories_items = """ DROP TABLE IF EXISTS category_items CASCADE
 """
 
 
-tables_to_drop = [drop_users_table, drop_categories_table, drop_products_table, 
+tables_to_drop = [drop_users_table, drop_categories_table, drop_products_table,
                   drop_sales, drop_blacklisted_tokens_table]
 
 list_of_tables = [users_table, categories_table, products_table, sales_table,

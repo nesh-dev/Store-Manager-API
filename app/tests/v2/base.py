@@ -3,7 +3,7 @@ import unittest
 
 from .dummy_data import users
 from ... import create_app
-from ...api.v2.database.database_connection import (create_database_tables, 
+from ...api.v2.database.database_connection import (create_database_tables,
                                                     drop_all_tables)
 
 
@@ -17,7 +17,7 @@ class BaseTest(unittest.TestCase):
         with self.app.app_context():
             create_database_tables()
 
-        # get admin tokens 
+        # get admin tokens
         self.client.post('/api/v2/auth/signup', json=users[0])
         response = self.client.post('/api/v2/auth/login', json=users[0])
         if response:
@@ -38,7 +38,7 @@ class BaseTest(unittest.TestCase):
                 'Authorization': 'Bearer {}'.format(user_token),
                 'Content-Type': 'application/json'}
 
-        def tearDown(self):
-            """teardown all the test data"""
-            with self.app.app_context():
-                drop_all_tables()
+    def tearDown(self):
+        """teardown all the test data"""
+        with self.app.app_context():
+            drop_all_tables()
