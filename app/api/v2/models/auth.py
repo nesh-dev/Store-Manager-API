@@ -14,7 +14,7 @@ class UserModel(BaseModel):
         self.username = username
         self.email = email
         self.password = Bcrypt.generate_password_hash(password).decode('utf-8')
-        self.role = 1
+        self.role = UserModel.attendant
         self.connection = create_connection()
         self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 

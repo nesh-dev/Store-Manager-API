@@ -7,6 +7,7 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
 # local imports 
 from app.bcrypt_instance import Bcrypt
 from ..models.auth import UserModel
+from ..models.blacklisted import Blacklisted
 from ...middleware.middleware import both_roles_allowed
 
 
@@ -85,3 +86,16 @@ class LoginResource(Resource):
                 access_token = create_access_token(identity=(user_id, role), expires_delta=expires)
                 return{"access_token": access_token, "message": "logged in"}, 200
         return {"message": "invalid credentials"}, 422
+
+
+class LogoutResource(Resource):
+    """
+        logout endpoint
+    """
+
+    @both_roles_allowed
+    def post(self):
+        jti = get_raw_jwt()['jti']
+        blacklisted = Blacklisted(jti)
+        blacklisted.blacklisted()
+        return {"message": "logged out"}, 200

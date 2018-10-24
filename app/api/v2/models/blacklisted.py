@@ -1,3 +1,4 @@
+"""contains the common methods """
 from .base import BaseModel
 from ..database.database_connection import create_connection
 from psycopg2.extras import RealDictCursor
@@ -5,25 +6,27 @@ from psycopg2.extras import RealDictCursor
 
 class Blacklisted(BaseModel):
     """model handles blacklisted tokens """
+
     def __init__(self, blacklist):
-        self.blacklist = blacklist 
+        self.blacklist = blacklist
+        self.connection = create_connection()
+        self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 
     def blacklisted(self):
         """ insert into blacklist table """
         query = """ INSERT into blacklisted (token)
-            value({})""".format(self.blacklist)
+            values('{}')""".format(self.blacklist)
         self.save_query(query)
 
     def check_if_blacklist(self):
         """ check if the token has been blacklisted """
-        connection, response = create_connection(), None
-        cursor = connection.cursor(cursor_factory=RealDictCursor)
-        query = """SELECT * FROM blacklisted where token ={} 
+        response = None
+        query = """SELECT * FROM blacklisted where token ='{}' 
                 """.format(self.blacklist)
-        cursor.execute(query)
-        connection.commit()
-        response = cursor.fetechall()
-        if len(response) > 0:
+        self.cursor.execute(query)
+        self.connection.commit()
+        response = self.cursor.fetchall()
+        if response is None:
             return False
         return True
 
