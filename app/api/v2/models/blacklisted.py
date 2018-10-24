@@ -26,7 +26,7 @@ class Blacklisted(BaseModel):
         self.cursor.execute(query)
         self.connection.commit()
         response = self.cursor.fetchall()
-        if response is None:
+        if not response:
             return False
         return True
 

@@ -1,6 +1,7 @@
 import psycopg2 
 import os 
 from flask import current_app
+from app.bcrypt_instance import Bcrypt
 
 # local imports
 from .database_tables import list_of_tables, tables_to_drop
