@@ -6,20 +6,30 @@ from flask_jwt_extended import (jwt_required,
 
 
 def admin_allowed(function):
-    """allows admin t access"""
+    """allows admin to access"""
     @wraps(function)
     @jwt_required
     def wrapper(*args, **kwargs):
         """wrapper for the function"""
         verify_jwt_in_request()
         claims = get_jwt_identity()
-        if claims['role'] != 2:
-            abort(
-                make_response(
-                    jsonify({'message': 'unauthorized to perform  function'}),
-                    401
+        if type(claims) == dict:
+            if claims['role'] != 2:
+                abort(
+                    make_response(
+                        jsonify({'message': 'unauthorized to perform  function'}),
+                        401
+                    )
                 )
-            )
+
+        elif type(claims) == list:
+            if claims[1] != 2:
+                abort(
+                        make_response(
+                            jsonify({'message': 'unauthorized to perform  function'}),
+                            401
+                        )
+                    )
         return function(*args, **kwargs)
     return wrapper
 
@@ -34,13 +44,24 @@ def attendant_allowed(function):
         """wrapper for the function"""
         verify_jwt_in_request()
         claims = get_jwt_identity()
-        if claims['role'] != 1:
-            abort(
-                make_response(
-                    jsonify({'message': 'unauthorized to perform  function'}),
-                    401
+
+        if type(claims) == dict:
+            if claims['role'] != 1:
+                abort(
+                    make_response(
+                        jsonify({'message': 'unauthorized to perform  function'}),
+                        401
+                    )
                 )
-            )
+
+        elif type(claims) == list:
+            if claims[1] != 1:
+                abort(
+                        make_response(
+                            jsonify({'message': 'unauthorized to perform  function'}),
+                            401
+                        )
+                    )
         return function(*args, **kwargs)
     return wrapper
 

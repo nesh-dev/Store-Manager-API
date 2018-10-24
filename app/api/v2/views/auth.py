@@ -8,7 +8,7 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
 from app.bcrypt_instance import Bcrypt
 from ..models.auth import UserModel
 from ..models.blacklisted import Blacklisted
-from ...middleware.middleware import both_roles_allowed
+from ...middleware.middleware import both_roles_allowed, admin_allowed
 
 
 class SignupResource(Resource):
@@ -21,6 +21,7 @@ class SignupResource(Resource):
     parser.add_argument('confirm_password', type=str, required=True)
     parser.add_argument('email', type=str, required=True)
 
+    @admin_allowed
     def post(self):
         data = SignupResource().parser.parse_args()
 

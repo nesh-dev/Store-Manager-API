@@ -1,10 +1,10 @@
 
 """ Users dummy data """
 users = [
-    {"username": "nesh", "email": "munenedeveloper@gmail.com",
+    {"username": "testadmin", "email": "testadmin@gmail.com",
      "password": "123456", "confirm_password": "123456"},
 
-    {"username": "andela", "email": "andela@gmail.com",
+    {"username": "testattendant", "email": "testattendant@gmail.com",
      "password": "123456", "confirm_password": "123456"},
 
     {"username": "mary", "email": "mary@gmail.com",
@@ -15,7 +15,7 @@ users = [
 
     {},
 
-    {"username": "mary", "email": "marygmail.com",
+    {"username": "mary", "email": "mary@gmail.com",
      "password": "123456", "confirm_password": "12345996"},
 
     {"username": "mary",
