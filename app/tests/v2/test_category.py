@@ -96,7 +96,7 @@ class CategoryTestsEndpoints(BaseTest):
                                     headers=self.attendant_headers)
         self.assertEqual(response.status_code, 201)
         self.assertIn('shirt', str(response.data))
-    
+
     def test_categories_product_admin(self):
         """test add prodcts to categories"""
         response = self.client.post('api/v2/category/products',

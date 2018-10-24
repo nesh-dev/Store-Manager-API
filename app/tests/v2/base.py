@@ -3,8 +3,9 @@ import unittest
 
 from .dummy_data import users
 from ... import create_app
-from ...api.v2.database.database_connection import (create_database_tables, 
-                                                    drop_all_tables)
+from ...api.v2.database.database_connection import (create_database_tables,
+                                                    drop_all_tables, 
+                                                    all_test_data)
 
 
 class BaseTest(unittest.TestCase):
@@ -16,13 +17,13 @@ class BaseTest(unittest.TestCase):
 
         with self.app.app_context():
             create_database_tables()
+            all_test_data()
 
-        # get admin tokens 
+        # get admin tokens
         self.client.post('/api/v2/auth/signup', json=users[0])
         response = self.client.post('/api/v2/auth/login', json=users[0])
         if response:
-            # admin_token = response.get_json().get('access_token')
-            admin_token = ''
+            admin_token = response.get_json().get('access_token')
         self.admin_headers = {
             'Authorization': 'Bearer {}'.format(admin_token),
             'Content-Type': 'application/json'
@@ -32,13 +33,12 @@ class BaseTest(unittest.TestCase):
         self.client.post('/api/v2/auth/signup', json=users[1])
         response = self.client.post('api/v2/auth/login', json=users[1])
         if response:
-            # user_token = response.get_json().get('access_token')
-            user_token = ""
+            user_token = response.get_json().get('access_token')
             self.attendant_headers = {
                 'Authorization': 'Bearer {}'.format(user_token),
                 'Content-Type': 'application/json'}
 
-        def tearDown(self):
-            """teardown all the test data"""
-            with self.app.app_context():
-                drop_all_tables()
+    def tearDown(self):
+        """teardown all the test data"""
+        with self.app.app_context():
+            drop_all_tables()

@@ -5,17 +5,17 @@ Creating Data Tables
 users_table = """ CREATE TABLE IF NOT EXISTS users(
     user_id serial PRIMARY KEY NOT NULL,
     user_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
     password VARCHAR(255) NOT NULL,
     role INTEGER DEFAULT NULL,
-    created_at timestamp with time zone DEFAULT now()
+    created_at timestamp default current_timestamp
 );"""
 
 categories_table = """ CREATE TABLE IF NOT EXISTS categories(
     category_id serial PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NULL,
-    created_at timestamp with time zone DEFAULT now()
+    created_at timestamp default current_timestamp
 );"""
 
 categories_items = """ CREATE TABLE IF NOT EXISTS category_items(
@@ -83,8 +83,9 @@ drop_categories_items = """ DROP TABLE IF EXISTS category_items CASCADE
 """
 
 
-tables_to_drop = [drop_users_table, drop_categories_table, drop_products_table, 
-                  drop_sales, drop_blacklisted_tokens_table]
+tables_to_drop = [drop_users_table, drop_categories_table, drop_products_table,
+                  drop_sales, drop_blacklisted_tokens_table,
+                  drop_categories_items, drop_sale_item]
 
 list_of_tables = [users_table, categories_table, products_table, sales_table,
                   blacklisted_tokens_table, sale_item, categories_items]

@@ -20,8 +20,9 @@ def create_app(config_name):
 
     jwt.init_app(app)
 
-    with app.app_context():
+    with app.app_context(): 
         create_database_tables()
 
     app.register_blueprint(apiv1)
+    app.register_blueprint(apiv2)
     return app
