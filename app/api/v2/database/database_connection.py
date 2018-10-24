@@ -21,15 +21,6 @@ def create_connection():
         return {'message': '{}'.format(e)}
 
 
-def create_database_tables():
-    """create tables"""
-    connection = create_connection()
-    cursor = connection.cursor()
-    for table in list_of_tables:
-        cursor.execute(table)
-        connection.commit()
-
-
 def drop_all_tables():
     """drop all tables"""
     connection = create_connection()
@@ -37,6 +28,7 @@ def drop_all_tables():
     for drop in tables_to_drop:
         cursor.execute(drop)
         connection.commit()
+    connection.close()
 
 
 def save_admin_test_user():
@@ -74,3 +66,17 @@ def save_attendant_test_user():
 def all_test_data():
     save_attendant_test_user()
     save_admin_test_user()
+
+
+def create_database_tables():
+    """create tables"""
+    connection = create_connection()
+    cursor = connection.cursor()
+    for table in list_of_tables:
+        cursor.execute(table)
+        connection.commit()
+    connection.close()
+    try:
+        save_admin_test_user()
+    except:
+        pass
