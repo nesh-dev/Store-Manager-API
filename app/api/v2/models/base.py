@@ -3,7 +3,6 @@ from ..database.database_connection import create_connection
 from psycopg2.extras import RealDictCursor
 
 
-
 class BaseModel(object):
     """contains common functionality for the models"""
     def __init__(self):
@@ -14,8 +13,7 @@ class BaseModel(object):
         """save queries"""
         self.cursor.execute(query)
         self.connection.commit()
-
-
+    
     def get_all(self, table):
         """method used to get all items in item"""
         query = "SELECT * FROM {}".format(table)
@@ -31,7 +29,6 @@ class BaseModel(object):
             self.save_query(query)
             item = self.cursor.fetchone()
             return item
-
 
     def delete(self, table, **kwargs):
         """method deletes items in db """

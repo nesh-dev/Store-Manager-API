@@ -10,7 +10,7 @@ class UserModel(BaseModel):
     admin = 2
     attendant = 1
 
-    def __init__(self, username='user', email='name@gmail.com', password='pass'):
+    def __init__(self, username='user', email='na@gmail.com', password='pass'):
         self.username = username
         self.email = email
         self.password = Bcrypt.generate_password_hash(password).decode('utf-8')
@@ -26,8 +26,8 @@ class UserModel(BaseModel):
                     self.role)
         self.save_query(query)
 
-    def change_role(self, id):
+    def change_role(self, email, role):
         """ used to edit user roles """
-        query = """ UPDATE  users SET role='{}' WHERE user_id='{}' 
-        """.format(self.role, id)
+        query = """ UPDATE  users SET role={} WHERE email='{}' 
+        """.format(role, email)
         self.save_query(query)

@@ -7,7 +7,7 @@ from config import app_config
 from .jwt_instance import jwt
 from .api.v1 import apiv1
 from .api.v2 import apiv2
-from .api.v2.database.database_connection import create_database_tables, create_connection
+from .api.v2.database.database_connection import create_database_tables
 
 
 def create_app(config_name):
