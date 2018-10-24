@@ -1,11 +1,11 @@
 import datetime
-import re 
+import re
 from flask_restful import reqparse, Resource
-from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 get_raw_jwt)
 
 # local imports 
+from app.bcrypt_instance import Bcrypt
 from ..models.auth import UserModel
 from ...middleware.middleware import both_roles_allowed
 
@@ -52,5 +52,36 @@ class SignupResource(Resource):
         return {"message": "registration sucessfull"}, 201
 
 
+class LoginResource(Resource):
 
+    """
+        Login user endpoint
+    """
+    parser = reqparse.RequestParser()
+    parser.add_argument('email', type=str, required=True)
+    parser.add_argument('password', type=str, required=True)
 
+    def post(self):
+        data = LoginResource.parser.parse_args()
+
+        # validate email
+
+        if not re.match(
+            r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+                data['email']):
+            return {"message": "invalid email"}, 422
+
+        # if userModel.get_length(userModel.get_users()) == 0:
+        #     return {"message": "please register"}
+        # # check if user exists
+        user = UserModel(email=data['email'], password=data['password'])
+        user_with_email = user.get_item('users', email=data['email'])
+        expires = datetime.timedelta(days=1)
+        # check if password match
+        if user_with_email:
+            user_id = user_with_email['user_id']
+            role = user_with_email['role']
+            if Bcrypt.check_password_hash(user_with_email['password'], data['password']):
+                access_token = create_access_token(identity=(user_id, role), expires_delta=expires)
+                return{"access_token": access_token, "message": "logged in"}, 200
+        return {"message": "invalid credentials"}, 422
