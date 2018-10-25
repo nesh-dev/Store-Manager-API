@@ -73,7 +73,8 @@ class ProductsResource(Resource):
         message = "Product with id {} does not exist".format(id)
         product = ProductsModel()
         product_to_update = product.get_item('products', product_id=id)
-        if type(product_to_update) is tuple:
+        # import pdb; pdb.set_trace()
+        if type(product_to_update) is not tuple:
             return product.update_products(id, name=name,
                                            description=description,
                                            quantity=quantity, 

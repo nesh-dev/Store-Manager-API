@@ -14,7 +14,7 @@ class ProductsModel(BaseModel):
         self.price = price 
         self.description = description
         self.quantity = quantity
-        self.mimimum_inventory = ProductsModel.MINIMUM_INVENTORY
+        self.minimum_inventory = ProductsModel.MINIMUM_INVENTORY
         self.connection = create_connection()
         self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 
@@ -24,23 +24,25 @@ class ProductsModel(BaseModel):
          quantity, minimum_inventory, price) values('{}', '{}', '{}', '{}',
         '{}') 
          """.format(self.name, self.description, 
-                    self.quantity, self.mimimum_inventory, self.price)
+                    self.quantity, self.minimum_inventory, self.price)
         self.save_query(query)
         product = self.get_item('products', name=self.name)
         product['created_at'] = str(product['created_at'])
         return product
         
     def update_products(self, id, name, price, description, quantity,
-                        mimimum_inventory):
+                        minimum_inventory):
         """update products """
-        for k, v in kwargs.items():
-            query = """UPDATE products SET name='{}', description='{}', 
-            quantity='{}', minimum_inventory='{}',
-             price='{}' WHERE product_id='{}'
-                """.format(self.name, self.description, 
-                           self.quantity, self.mimimum_inventory, self.price, 
-                           id)
-            self.save_query(query)
-            product = self.get_item('products', product_id=id)
+        
+        query = """UPDATE products SET name='{}', description='{}', 
+        quantity='{}', minimum_inventory='{}',
+            price='{}' WHERE product_id='{}'
+            """.format(name, description, 
+                       quantity, minimum_inventory, price, 
+                       id)
+        self.save_query(query)
+        product = self.get_item('products', product_id=id)
+        if type(product) == dict:
             product['created_at'] = str(product['created_at'])
             return product
+        return product
