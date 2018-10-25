@@ -47,6 +47,7 @@ def save_admin_test_user():
         return {'message': '{}'.format(e)}
 
 
+
 def save_attendant_test_user():
     """add the test attendant user"""
     connection = create_connection()
@@ -63,9 +64,27 @@ def save_attendant_test_user():
         return {'message': '{}'.format(e)}
 
 
+def save_test_product():
+    """add the test admin user"""
+    connection = create_connection()
+    cursor = connection.cursor(cursor_factory=RealDictCursor)
+    try:
+        query = """ INSERT into products (name, description,
+         quantity, minimum_inventory, price) values(%s, %s, %s, %s, %s) 
+         """
+        cursor.execute(query, ('shirt', 'A white polo shirt', 
+                               2, 100, 100))
+        connection.commit()
+        data = cursor.fetchone()
+        cursor.close()   
+    except psycopg2.DatabaseError as e:
+        return {'message': '{}'.format(e)}
+
+
 def all_test_data():
     save_attendant_test_user()
     save_admin_test_user()
+    save_test_product()
 
 
 def create_database_tables():

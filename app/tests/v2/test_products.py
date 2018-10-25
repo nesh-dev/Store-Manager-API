@@ -55,7 +55,7 @@ class ProductsEndpointsTest(BaseTest):
         response = self.client.get('/api/v2/products/200',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('Product with id 200 does not exist', str(response.data))
+        self.assertIn('item product_id does not exist', str(response.data))
 
     def test_product_get_item_by_str(self):
         """test get item with str"""

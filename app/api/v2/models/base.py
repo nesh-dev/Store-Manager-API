@@ -19,6 +19,11 @@ class BaseModel(object):
         query = "SELECT * FROM {}".format(table)
         self.save_query(query)
         all_items = self.cursor.fetchall()
+        if not all_items:
+            return {"message": "no saved products"}, 404
+        for item in all_items:
+            string_date = {'created_at': str(item['created_at'])}
+            item.update(string_date) 
         return all_items
 
     def get_item(self, table, **kwargs):
@@ -28,6 +33,9 @@ class BaseModel(object):
             """.format(table, key, val)
             self.save_query(query)
             item = self.cursor.fetchone()
+            if item is None:
+                return {"message": "item {} does not exist".format(key)}, 404
+            item['created_at'] = str(item['created_at'])
             return item
 
     def delete(self, table, **kwargs):
