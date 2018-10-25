@@ -1,6 +1,6 @@
 
-from ..database.database_connection import create_connection
 from psycopg2.extras import RealDictCursor
+from ..database.database_connection import create_connection
 
 
 class BaseModel(object):
@@ -20,7 +20,7 @@ class BaseModel(object):
         self.save_query(query)
         all_items = self.cursor.fetchall()
         if not all_items:
-            return {"message": "no saved products"}, 404
+            return {"message": "no saved items"}, 404
         for item in all_items:
             string_date = {'created_at': str(item['created_at'])}
             item.update(string_date) 
@@ -37,6 +37,20 @@ class BaseModel(object):
                 return {"message": "item {} does not exist".format(key)}, 404
             item['created_at'] = str(item['created_at'])
             return item
+
+    def get_all_with(self, table, **kwargs):
+        """get a list of similar items """
+        for key, val in kwargs.items():
+            query = """SELECT * FROM {} WHERE {}='{}';
+            """.format(table, key, val)
+            self.save_query(query)
+            items = self.cursor.fetchall()
+            if not items:
+                return {"message": "no saved items"}, 404
+            for item in items:
+                string_date = {'created_at': str(item['created_at'])}
+                item.update(string_date) 
+            return items
 
     def delete(self, table, **kwargs):
         """method deletes items in db """

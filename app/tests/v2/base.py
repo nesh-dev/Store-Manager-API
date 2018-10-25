@@ -1,7 +1,7 @@
 """"add unittest as testing framework"""
 import unittest
-
-from .dummy_data import users
+import json
+from .dummy_data import users, sale_items, products
 from ... import create_app
 from ...api.v2.database.database_connection import (create_database_tables,
                                                     drop_all_tables, 
@@ -37,6 +37,13 @@ class BaseTest(unittest.TestCase):
             self.attendant_headers = {
                 'Authorization': 'Bearer {}'.format(user_token),
                 'Content-Type': 'application/json'}
+
+        self.client.post('/api/v2/products', data=json.dumps(products[0]),
+                         content_type='application/json',
+                         headers=self.admin_headers)
+        self.client.post('/api/v2/sales', data=json.dumps(sale_items[0]),
+                         content_type='application/json',
+                         headers=self.attendant_headers)
 
     def tearDown(self):
         """teardown all the test data"""
