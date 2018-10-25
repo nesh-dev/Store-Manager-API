@@ -34,4 +34,4 @@ class SalesListResource(Resource):
         complete_sale = sale.create_sale(attendant, sale_list)
         return complete_sale, 201
 
-        
+
