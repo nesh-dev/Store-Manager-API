@@ -31,7 +31,7 @@ categories_items = """ CREATE TABLE IF NOT EXISTS category_items(
 
 products_table = """ CREATE TABLE IF NOT EXISTS products(
     product_id serial PRIMARY KEY NOT NULL,
-    name INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     quantity INTEGER NOT NULL,
     minimum_inventory VARCHAR(255) NOT NULL,
