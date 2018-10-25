@@ -7,6 +7,8 @@ from .views.auth import (SignupResource, LoginResource, LogoutResource,
                          UserRoleResource)
 
 from .views.products import ProductListResource, ProductsResource
+
+from .views.sales import SalesListResource
                   
 apiv2 = Blueprint('apiv2', __name__)
 
@@ -21,3 +23,5 @@ api.add_resource(UserRoleResource, '/auth/role')
 
 api.add_resource(ProductListResource, '/products')
 api.add_resource(ProductsResource, '/products/<int:id>')
+
+api.add_resource(SalesListResource, '/sales')

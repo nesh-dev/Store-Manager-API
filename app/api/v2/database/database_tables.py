@@ -42,8 +42,9 @@ products_table = """ CREATE TABLE IF NOT EXISTS products(
 
 sales_table = """ CREATE TABLE IF NOT EXISTS sales(
     sale_id serial PRIMARY KEY NOT NULL,
-    attendant_email VARCHAR(255) NOT NULL,
-    total INTEGER NOT NULL,
+    attendant_email VARCHAR(255),
+    customer VARCHAR(255),
+    total INTEGER,
     created_at timestamp with time zone DEFAULT now()
     );
 """
@@ -52,6 +53,7 @@ sale_item = """ CREATE TABLE IF NOT EXISTS sale_items(
     sale_item_id serial PRIMARY KEY NOT NULL,
     sale_id INTEGER NOT NULL,
     product_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
     created_at timestamp with time zone DEFAULT now(),
     FOREIGN KEY (product_id) REFERENCES products (product_id)
     ON UPDATE CASCADE ON DELETE CASCADE,

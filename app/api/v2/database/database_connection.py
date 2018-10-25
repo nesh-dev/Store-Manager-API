@@ -47,7 +47,6 @@ def save_admin_test_user():
         return {'message': '{}'.format(e)}
 
 
-
 def save_attendant_test_user():
     """add the test attendant user"""
     connection = create_connection()
