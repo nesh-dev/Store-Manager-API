@@ -30,15 +30,8 @@ class SalesListResource(Resource):
                 return {"message": "{} cannot be an empty".format(k)}
     
         sale_list = data['sale_items']
+        sale = SalesModel(customer=name)
+        complete_sale = sale.create_sale(attendant, sale_list)
+        return complete_sale, 201
 
-        product_id = 0
-        quantity = 0
-        for item in sale_list:
-            list_length = len(sale_list)
-            iteration = list_length
-            product_id = item['product_id']
-            quantity = item['quantity']
-            sale = SalesModel(customer=name, quantity=quantity)
-            complete_sale = sale.create_sale(attendant, product_id, iteration)
-            return complete_sale, 201
-
+        
