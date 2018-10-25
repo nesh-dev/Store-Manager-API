@@ -93,9 +93,19 @@ category_product = [{"product_id": 1, "category_id": "1"}]
 
 
 sale_items = [
-    {"sale_id": 1, "product_id": 1, "customer": "nesh", "quantity": 2},
-    {"product_id": 1, "customer": "pius", "quantity": 2},
-    {"sale_id": 1, "product_id": 1, "customer": "nesh", "quantity": "2"},
-    {"sale_id": 2, "product_id": 1, "customer": "joseph", "quantity": 2}
-
+   {
+    "sale_items": [{"product_id":1, "quantity":1}],
+    "customer":"victor"
+    },
+    {
+    "sale_items": [{"product_id":1, "quantity":1}, {"product_id":1, "quantity":3}]
+    },
+    {
+    "sale_items": [{"product_id":1, "quantity":1}, {"product_id":2, "quantity":3}],
+    "customer":"victor"
+    },
+    {
+    "sale_items": [{"product_id":1, "quantity":1}, {"product_id":2, "quantity":3}],
+    "customer":"victor"
+    },
     ]

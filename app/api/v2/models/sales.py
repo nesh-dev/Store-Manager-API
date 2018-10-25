@@ -31,37 +31,29 @@ class SalesModel(BaseModel):
             product_id = item['product_id']
             quantity = item['quantity']
             product = ProductsModel()
-            product_to_get = product.get_item('products', product_id=product_id)
+            product_to_get = product.get_item('products', 
+                                              product_id=product_id)
+            if type(product_to_get) is tuple:
+                return {"message": "product does not exist"}, 404
             price = product_to_get['price']
             item_total = price * quantity
             total_list.append(item_total)
             sale_items_query = """ INSERT into sale_items (sale_id, product_id,
-             quantity) values('{}', '{}', '{}')
+            quantity) values('{}', '{}', '{}')
             
-             """.format(sale_id, product_id, quantity)
+            """.format(sale_id, product_id, quantity)
 
             self.save_query(sale_items_query)
+        
         total = sum(total_list)
 
         update_query = """UPDATE sales SET total='{}' WHERE sale_id='{}'
             """.format(total, sale_id)
         self.save_query(update_query)
 
-        return product_to_get
-        
-    # def update_products(self, id, name, price, description, quantity,
-    #                     minimum_inventory):
-    #     """update products """
-        
-    #     query = """UPDATE products SET name='{}', description='{}', 
-    #     quantity='{}', minimum_inventory='{}',
-    #         price='{}' WHERE product_id='{}'
-    #         """.format(name, description, 
-    #                    quantity, minimum_inventory, price, 
-    #                    id)
-    #     self.save_query(query)
-    #     product = self.get_item('products', product_id=id)
-    #     if type(product) == dict:
-    #         product['created_at'] = str(product['created_at'])
-    #         return product
-    #     return product
+        sale = SalesModel()
+        sales_dict_to_return = sale.get_item('sales', sale_id=sale_id)
+        sales_item = sale.get_all_with('sale_items', sale_id=sale_id)
+        return [sales_dict_to_return, {"sale_items": sales_item}], 201
+
+
