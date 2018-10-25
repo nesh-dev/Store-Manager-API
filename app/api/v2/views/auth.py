@@ -49,7 +49,7 @@ class SignupResource(Resource):
                          password=data['password'])
 
         user_with_email = user.get_item('users', email=data['email'])
-        if user_with_email:
+        if type(user_with_email) is not tuple:
             return {"message": "user with email already registred"}, 409
     
         user.create_user()
@@ -79,7 +79,7 @@ class LoginResource(Resource):
         user_with_email = user.get_item('users', email=data['email'])
         expires = datetime.timedelta(days=1)
         # check if password match
-        if user_with_email:
+        if type(user_with_email) is not tuple:
             user_id = user_with_email['user_id']
             role = user_with_email['role']
             if Bcrypt.check_password_hash(user_with_email['password'],
@@ -128,7 +128,7 @@ class UserRoleResource(Resource):
         user = UserModel(email=data['email'])
         user_with_email = user.get_item('users', email=data['email'])
 
-        if user_with_email:
+        if type(user_with_email) is not tuple:
             # change role based on current role
             user_role = user_with_email['role']
             if user_role == 2:
