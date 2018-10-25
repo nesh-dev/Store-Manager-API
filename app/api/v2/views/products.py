@@ -12,6 +12,7 @@ class ProductListResource(Resource):
     parser.add_argument("price", type=int, required=True)
     parser.add_argument("quantity", type=int, required=True)
  
+    @admin_allowed
     def post(self): 
         """ save products """
         data = ProductListResource.parser.parse_args()
@@ -33,6 +34,7 @@ class ProductListResource(Resource):
             return product.create_product(), 201
         return {"message": "Product with name already exist"}, 409
 
+    @both_roles_allowed
     def get(self):
         product = ProductsModel()
         return product.get_all('products')
@@ -41,12 +43,13 @@ class ProductListResource(Resource):
 class ProductsResource(Resource):
     """ has endpoints for edit, get and delete"""
     parser = reqparse.RequestParser()
-    parser.add_argument("name", type=str)
-    parser.add_argument("description", type=str)
-    parser.add_argument("price", type=int)
-    parser.add_argument("quantity", type=int)
-    parser.add_argument("minimum_inventory", type=int)
+    parser.add_argument("name", type=str, required=True)
+    parser.add_argument("description", type=str, required=True)
+    parser.add_argument("price", type=int, required=True)
+    parser.add_argument("quantity", type=int, required=True)
+    parser.add_argument("minimum_inventory", type=int, required=True)
 
+    @both_roles_allowed
     def get(self, id):
         """get a product by id """
         product = ProductsModel()
@@ -56,6 +59,7 @@ class ProductsResource(Resource):
             return product_to_get
         return {"message": message}, 404
 
+    @admin_allowed
     def put(self, id):
         
         """update a product """
@@ -83,6 +87,7 @@ class ProductsResource(Resource):
                                            ), 201
         return {"message": message}, 404
 
+    @admin_allowed
     def delete(self, id):
         product = ProductsModel()
         product_to_delete = product.get_item('products', product_id=id)

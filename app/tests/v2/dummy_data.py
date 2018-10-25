@@ -33,13 +33,13 @@ users = [
 products = [
     {
         "name": "shirt", "description": "A white polo shirt",
-        "price": 100, "category_id": 1, "quantity": 2,
+        "price": 100, "quantity": 2,
         "minimum_inventory": 100
     },
 
     {
         "description": "A white polo shirt", "price": 100,
-        "category_id": 1, "quantity": 2,
+        "quantity": 2,
         "minimum_inventory": 100
     },
 
