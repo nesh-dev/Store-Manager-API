@@ -9,6 +9,8 @@ from .views.auth import (SignupResource, LoginResource, LogoutResource,
 from .views.products import ProductListResource, ProductsResource
 
 from .views.sales import SalesListResource, SalesResource, AttendatSales
+from .views.category import (CategoryListResource, CategoryResource, 
+                             AddProductsToCategories)
                   
 apiv2 = Blueprint('apiv2', __name__)
 
@@ -27,3 +29,7 @@ api.add_resource(ProductsResource, '/products/<int:id>')
 api.add_resource(SalesListResource, '/sales')
 api.add_resource(SalesResource, '/sales/<int:id>')
 api.add_resource(AttendatSales, '/sales/<string:email>')
+
+api.add_resource(CategoryListResource, '/categories')
+api.add_resource(CategoryResource, '/category/<int:id>')
+api.add_resource(AddProductsToCategories, '/cat/products')
