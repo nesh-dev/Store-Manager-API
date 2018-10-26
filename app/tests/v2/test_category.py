@@ -106,16 +106,6 @@ class CategoryTestsEndpoints(BaseTest):
         self.assertEqual(response.status_code, 401)
         self.assertIn('unauthorized', str(response.data))
 
-    def test_categories_in_porducts(self):
-        """test products in the categories"""
-        response = self.client.post('api/v2/cat/products',
-                                    data=json.dumps(category_product[0]),
-                                    content_type='application/json',
-                                    headers=self.attendant_headers)
-        response = self.client.get('api/v2/cat/products',
-                                   headers=self.attendant_headers)
-        self.assertEqual(response.status_code, 200)
-    
 
     def test_delete(self):
         """test delete"""

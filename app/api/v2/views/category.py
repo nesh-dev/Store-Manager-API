@@ -65,7 +65,7 @@ class CategoryResource(Resource):
         description = data['description']
         message = "category with id {} does not exist".format(id)
         category = CategoryModel(name=name, description=description)
-        category_to_update = category.get_item('products', product_id=id)
+        category_to_update = category.get_item('categories', category_id=id)
         # import pdb; pdb.set_trace()
         if type(category_to_update) is not tuple:
             return category.update_category(id), 201
@@ -92,9 +92,12 @@ class AddProductsToCategories(Resource):
     def post(self):
         data = AddProductsToCategories.parser.parse_args()
         category = CategoryModel()
-        return category.add_products(data['category_id'], data['category_id'])
-    
+        return category.add_products(data['category_id'], data['product_id'])
+
+
+class ProductsInCategory(Resource):
+    """ get items in category """
     @both_roles_allowed
-    def get(get):
+    def get(get, id):
         category = CategoryModel()
-        return category.get_all('category_items')
+        return category.get_all_with('category_items', category_id=id)
