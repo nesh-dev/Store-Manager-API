@@ -36,6 +36,25 @@ Install the required packages
 
 `pip install -r requirements.txt`
 
+Install Postgresql 
+
+`CREATE DATABASE storemanager`
+
+Export environment variables
+ - export SECRET_KEY ="random string here"
+- export APP_SETTINGS="development"
+- export DATABASE_URL="dbname=storemanager user= password= host=localhost"
+
+
+navigate back to root and run python run.py 
+
+
+use postman to test the endpoints
+
+### Testing 
+
+run `pytest` within your virtualenviroment 
+
 ### Launch the program 
 
 `python run.py`
@@ -90,12 +109,14 @@ Use Postman to the test the following endpoints
  
 ### CREATED WITH 
 
-Flask, Flask Restful 
+Flask, Flask Restful , Postgres 
 
 ### API DOCUMENTATION 
-
+[Apiary Version 2 Documentation](https://storemanagerv2.docs.apiary.io/#)
 [PostMan Documentation](https://documenter.getpostman.com/view/2464061/RWguvbZ1)
-[Apiary Documentation](https://storemanagerv1.docs.apiary.io/#introduction/authentication)
+[Apiary Version 1 Documentation](https://storemanagerv1.docs.apiary.io/#introduction/authentication)
+
+
 
 ### HEROKU LINK
 [HEROKU API](https://store-manger.herokuapp.com/)

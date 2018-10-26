@@ -49,13 +49,8 @@ class SalesTestEndpoints(BaseTest):
         response = self.client.get('/api/v2/sales/200',
                                    headers=self.admin_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('item sale_id does not exist', str(response.data))
+        self.assertIn('sale with id 200 does not exist', str(response.data))
 
-    def test_get_item_by_str(self):
-        """test get item with str"""
-        response = self.client.get('/api/v2/sales/"20"',
-                                   headers=self.admin_headers)
-        self.assertEqual(response.status_code, 404)
 
     def test_attendant_delete(self):
         """test attendant delete"""

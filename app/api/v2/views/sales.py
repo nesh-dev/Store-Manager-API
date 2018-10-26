@@ -55,16 +55,29 @@ class SalesListResource(Resource):
 
 class SalesResource(Resource):
     """ has get and delete endpoints for the sales """
-    @admin_allowed
+    @both_roles_allowed
     def get(self, id):
         """ get a particular sale via its id """
+        message = "sale with id {} does not exist".format(id)
+        current_user = get_jwt_identity()
+        user_id = current_user[0]
+        user_role = current_user[1]
 
+        user = UserModel()
+        user = user.get_item('users', user_id=user_id)
+        attendant_email = user['email']
         sale = SalesModel()
         sale_to_get = sale.get_item('sales', sale_id=id)
-        message = "sale with id {} does not exist".format(id)
-        if sale_to_get:
-            return sale_to_get
-        return {"message": message}, 404
+        if type(sale_to_get) == tuple:
+               return {"message": message}, 404
+
+        sale_attendat_email = sale_to_get['attendant_email']
+
+
+        if (sale_attendat_email != attendant_email) or (user_role != 2):
+            return {"message": "unauthorized to view sale item"}
+        return sale_to_get
+     
 
     @admin_allowed
     def delete(self, id):
@@ -79,9 +92,17 @@ class SalesResource(Resource):
 
 class AttendatSales(Resource):
     """ get sales of a specific user """
-    @admin_allowed
+    @both_roles_allowed
     def get(self, email):
         """ get a user sales based on their email """
+        current_user = get_jwt_identity
+        user_id = current_user[0]
+
+        user = UserModel()
+        user = user.get_item('users', user_id=user_id)
+        attendant_email = user['email']
+        if attendant_email != email:
+            return {"message": "unauthorized to view records"}, 401
         sale = SalesModel()
         users_sales = sale.get_all_with('sales', attendant_email=email)
         return users_sales

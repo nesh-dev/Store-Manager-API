@@ -12,7 +12,7 @@ app = create_app(config_name)
 
 @app.route('/docs')
 def docs():
-    return redirect('https://storemanagerv1.docs.apiary.io/#introduction/authentication')
+    return redirect('https://storemanagerv2.docs.apiary.io')
 
 
 @app.route('/')

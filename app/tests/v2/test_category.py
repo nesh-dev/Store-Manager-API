@@ -60,7 +60,7 @@ class CategoryTestsEndpoints(BaseTest):
         response = self.client.get('/api/v2/category/200',
                                    headers=self.attendant_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('category with id 200 does not exist',
+        self.assertIn('item category_id does not exist',
                       str(response.data))
 
     def test_get_item_by_str(self):
@@ -85,12 +85,12 @@ class CategoryTestsEndpoints(BaseTest):
                                    content_type='application/json',
                                    headers=self.admin_headers)
         self.assertEqual(response.status_code, 404)
-        self.assertIn('category with id 200 does not exist',
+        self.assertIn('"category with id 200 does not exist',
                       str(response.data))
 
     def test_categories_product(self):
         """test add prodcts to categories"""
-        response = self.client.post('api/v2/category/products',
+        response = self.client.post('api/v2/cat/products',
                                     data=json.dumps(category_product[0]),
                                     content_type='application/json',
                                     headers=self.attendant_headers)
@@ -99,27 +99,17 @@ class CategoryTestsEndpoints(BaseTest):
 
     def test_categories_product_admin(self):
         """test add prodcts to categories"""
-        response = self.client.post('api/v2/category/products',
+        response = self.client.post('api/v2/cat/products',
                                     data=json.dumps(category_product[0]),
                                     content_type='application/json',
                                     headers=self.admin_headers)
         self.assertEqual(response.status_code, 401)
         self.assertIn('unauthorized', str(response.data))
 
-    def test_categories_in_porducts(self):
-        """test products in the categories"""
-        response = self.client.post('api/v2/category/products',
-                                    data=json.dumps(category_product[0]),
-                                    content_type='application/json',
-                                    headers=self.attendant_headers)
-        response = self.client.get('api/v2/category/products',
-                                   headers=self.attendant_headers)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('shirt', str(response.data))
 
     def test_delete(self):
         """test delete"""
         response = self.client.delete('/api/v2/category/1',
                                       headers=self.admin_headers)
         self.assertEqual(response.status_code, 202)
-        self.assertIn('category deleted', str(response.data))
+        self.assertIn('Category deleted', str(response.data))
