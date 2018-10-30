@@ -1,3 +1,4 @@
+
 import datetime
 import re
 from json_tricks import dumps
@@ -31,20 +32,18 @@ class SignupResource(Resource):
         # eliminate space in username
         username = ''.join(data['username'].split())
 
-        error_list = []
-
         if not re.match(
                         r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
                 data['email']):
-             {"message": "invalid email"}, 422
+            return {"message": "invalid email"}, 422
         elif len(data['password']) < 6:
-             error_list.append({"message":
-                    "password should atleast six characters long"})
+            return {"message":
+                    "password should atleast six characters long"}
 
         elif data['username'] == "":
-            error_list.append({"message": "username should not be empty"})
+            return {"message": "username should not be empty"}
         elif data['confirm_password'] != data["password"]:
-            error_list.append( {"message": "passwords do not match"})
+            return {"message": "passwords do not match"}
 
         user = UserModel(username=username, 
                          email=data['email'], 
@@ -141,7 +140,3 @@ class UserRoleResource(Resource):
                 message = "role changed to admin"
             user.change_role(data['email'], user_role)
             return {"message": message}
-        return {"message": "user with email does not exist"}
-
-
-

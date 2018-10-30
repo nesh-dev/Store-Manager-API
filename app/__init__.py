@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS 
 from config import app_config
 
 # local imports
@@ -16,7 +17,7 @@ def create_app(config_name):
         App initialization
     """
     app = Flask(__name__, instance_relative_config=True)
-
+    CORS(app)
     app.config.from_object(app_config[config_name])
 
     jwt.init_app(app)
