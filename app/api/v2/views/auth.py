@@ -31,18 +31,20 @@ class SignupResource(Resource):
         # eliminate space in username
         username = ''.join(data['username'].split())
 
+        error_list = []
+
         if not re.match(
                         r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
                 data['email']):
-            return {"message": "invalid email"}, 422
+             {"message": "invalid email"}, 422
         elif len(data['password']) < 6:
-            return {"message":
-                    "password should atleast six characters long"}
+             error_list.append({"message":
+                    "password should atleast six characters long"})
 
         elif data['username'] == "":
-            return {"message": "username should not be empty"}
+            error_list.append({"message": "username should not be empty"})
         elif data['confirm_password'] != data["password"]:
-            return {"message": "passwords do not match"}
+            error_list.append( {"message": "passwords do not match"})
 
         user = UserModel(username=username, 
                          email=data['email'], 

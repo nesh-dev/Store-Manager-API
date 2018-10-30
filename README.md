@@ -12,52 +12,52 @@ This is the REST API For the APP
 
 
 ### Installation and Setup 
-Clone the repo 
+- Clone the repo 
 
-`git clone https://github.com/kevinene91/Store-Manager-API.git`
+    `git clone https://github.com/kevinene91/Store-Manager-API.git`
 
-Switch the develop branch 
+- Switch the develop branch 
 
-`git fetch origin develop`
+    `git fetch origin develop`
 
-Navigate to the folder 
+- Navigate to the folder 
 
-`cd Store-Manager-API`
+    `cd Store-Manager-API`
 
-create a virual env 
+- create a virual env 
 
-`virtualenv venv`
+    `virtualenv venv`
 
-Activate the venv 
+- Activate the venv 
 
-`source/venv/activate`
+    `source/venv/activate`
 
-Install the required packages 
+- Install the required packages 
 
-`pip install -r requirements.txt`
+    `pip install -r requirements.txt`
 
-Install Postgresql 
+- Install Postgresql 
 
-`CREATE DATABASE storemanager`
+    `CREATE DATABASE storemanager`
 
-Export environment variables
- - export SECRET_KEY ="random string here"
-- export APP_SETTINGS="development"
-- export DATABASE_URL="dbname=storemanager user= password= host=localhost"
+- Run configurations 
+  configurations for the app are contained in the sample.env you can copy and paste the structure  and add it to a .env file
 
-
-navigate back to root and run python run.py 
+   `$ cp sample.env .env`
 
 
-use postman to test the endpoints
+- navigate back to root and run python run.py 
+
+
+- use postman to test the endpoints
 
 ### Testing 
 
-run `pytest` within your virtualenviroment 
+- run `pytest` within your virtualenviroment 
 
 ### Launch the program 
 
-`python run.py`
+ - `python run.py`
 
 Use Postman to the test the following endpoints 
 
@@ -66,45 +66,47 @@ Use Postman to the test the following endpoints
 
 |Endpoint           |   Method   | description         |
 |  ------------     | ---------- |  -----------------  |
-|/api/v1/register   |   POST     | add  a new user     |
+|/api/v1/auth/role  |   POST     | add  a new user     |
 |                   |            |                     |
-|/api/v1/login      |   POST     |User Login token     |
+|/api/v2/auth/login |   POST     |User Login token     |
+|                   |            |                     |
+|/api/v2/auth/role  |   POST     | change user role    |
+|                   |            |                     |
 |                   |            |                     | 
-|/api/v1/logout     |   POST     | User logout         |
+|/api/v2/auth/logout|   POST     | User logout         |
 
 # API Endpoints
 
 |   # Endpoint              |  # Methods    | # Description           |Auth Required           |
 |   -----------             | ----------    | -----------------       | ------------           |
-|/api/v1/caregories         |   GET         |  list all categories    | attendant & admin      |
+|/api/v2/categories         |   GET         |  list all categories    | attendant & admin      |
 |                           |               |                         |                        | 
-|/api/v1/categories         |   POST        | add  a new category     |  admin                 |
+|/api/v2/categories         |   POST        | add  a new category     |  admin                 |
 |                           |               |                         |                        |
-|/api/v1/category/<id>      |  PUT          |edit category            |  admin                 |
+|/api/v2/category/<id>      |  PUT          |edit category            |  admin                 |
 |                           |               |                         |                        |
-|/api/v1/category/<id>      |   GET         | get a specific category |  attendant & admin     |
+|/api/v2/category/<id>      |   GET         | get a specific category |  attendant & admin     |
 |                           |               |                         |                        |
-|/api/v1/products           |   POST        | add  a new product      |  admin                 |
+|/api/v2/products           |   POST        | add  a new product      |  admin                 |
 |                           |               |                         |                        |
-|/api/v1/products/<id>      |   PUT         |edit a product           |   admin                |
+|/api/v2/products/<id>      |   PUT         |edit a product           |   admin                |
 |                           |               |                         |                        |
-|/api/v1/products           |   GET         | list all products       |   attendant & admin    |
+|/api/v2/products           |   GET         | list all products       |   attendant & admin    |
 |                           |               |                         |                        |
-|/api/v1/products/<id>      |   GET         | Get a specific product  |   attendant & admin    |
+|/api/v2/products/<id>      |   GET         | Get a specific product  |   attendant & admin    |
 |                           |               |                         |                        |
-|url/category/products/<id> |   POST        | add products to category|   attendant            | 
+|url/cat/products           |   POST        | add products to category|   attendant            | 
 |                           |               |                         |                        |
-|url/category/products/<id> |   GET         | all product in category |   attendant and admin  | 
+|url/products/cat/<id>      |   GET         | all product in category |   attendant and admin  | 
 |                           |               |                         |                        |  
-|/api/v1/sales              |   GET         |   List all sales        |  admin                 |
+|/api/v2/sales              |   GET         |   List all sales        |  admin                 |
 |                           |               |                         |                        | 
-|/api/v1/sales              |  POST         |    create sales         |  attendant             |
+|/api/v2/sales              |  POST         |    create sales         |  attendant             |
 |                           |               |                         |                        |
-|/api/v1/sales/<id>         |  GET          |   Get a sale            |  admin and sale creator|
+|/api/v2/sales/<id>         |  GET          |   Get a sale            |  admin and sale creator|
 |                           |               |                         |                        |
-|/api/v1/sales/<id>         |  DEL          |    Delete a sale item   |  admin                 |
+|/api/v2/sales/<id>         |  DEL          |    Delete a sale item   |  admin                 |
 |                           |               |                         |                        |  
-|/api/v1/sales/<id>         |  PUT          |    Edit a sale record   |   admin                |
 |                           |               |                         |                        |
  
 ### CREATED WITH 
