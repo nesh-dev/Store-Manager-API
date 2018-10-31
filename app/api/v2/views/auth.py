@@ -91,12 +91,17 @@ class LoginResource(Resource):
         if type(user_with_email) is not tuple:
             user_id = user_with_email['user_id']
             role = user_with_email['role']
+            if role == 1:
+                role_name = "attendant"
+            else:
+                role_name = "admin"
             if Bcrypt.check_password_hash(user_with_email['password'],
                                           data['password']):
                 access_token = create_access_token(identity=(user_id, role), 
                                                    expires_delta=expires)
                 return{"access_token": access_token, 
-                       "message": "logged in"}, 200
+                       "message": "logged in", 
+                       "role": role_name}, 200
         return {"message": "invalid credentials"}, 422
 
 
