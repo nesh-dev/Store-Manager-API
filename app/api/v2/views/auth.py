@@ -32,6 +32,10 @@ class SignupResource(Resource):
         # eliminate space in username
         username = ''.join(data['username'].split())
 
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
+
         if not re.match(
                         r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
                 data['email']):
@@ -75,6 +79,10 @@ class LoginResource(Resource):
             r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
                 data['email']):
             return {"message": "invalid email"}, 422
+
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
 
         user = UserModel(email=data['email'], password=data['password'])
         user_with_email = user.get_item('users', email=data['email'])

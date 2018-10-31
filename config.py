@@ -1,8 +1,5 @@
 import os
 
-"""
-    Implementaion of Various Instance Configurations
-"""
 
 
 class Config(object):

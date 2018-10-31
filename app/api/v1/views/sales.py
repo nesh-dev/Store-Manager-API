@@ -1,4 +1,4 @@
-import re
+
 from flask_restful import reqparse, Resource
 from flask_jwt_extended import get_jwt_identity
 
