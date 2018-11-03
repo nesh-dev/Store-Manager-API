@@ -3,9 +3,6 @@ from flask_jwt_extended import JWTManager
 from .api.v1.models.auth import userModel
 from .api.v2.models.blacklisted import Blacklisted
 
-"""
-     Holds the the JWT instance to be used in the app
-"""
 
 jwt = JWTManager()
 

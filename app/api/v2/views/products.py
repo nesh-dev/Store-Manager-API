@@ -96,3 +96,14 @@ class ProductsResource(Resource):
             product.delete('products', product_id=id)
             return {"message": "Product deleted"}, 202
         return {"message": message}
+
+
+class SearchProduct(Resource):
+
+    def get(self, name):
+        product = ProductsModel()
+        product_to_get = product.get_item('products', name=name)
+        message = "Product with id {} does not exist".format(id)
+        if product_to_get:
+            return product_to_get
+        return {"message": message}, 404

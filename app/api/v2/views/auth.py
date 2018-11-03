@@ -1,3 +1,4 @@
+
 import datetime
 import re
 from json_tricks import dumps
@@ -30,6 +31,10 @@ class SignupResource(Resource):
         # validations for input
         # eliminate space in username
         username = ''.join(data['username'].split())
+
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
 
         if not re.match(
                         r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
@@ -75,6 +80,10 @@ class LoginResource(Resource):
                 data['email']):
             return {"message": "invalid email"}, 422
 
+        for k, v in data.items():
+            if v == "":
+                return {"message": "{} cannot be an empty".format(k)}
+
         user = UserModel(email=data['email'], password=data['password'])
         user_with_email = user.get_item('users', email=data['email'])
         expires = datetime.timedelta(days=1)
@@ -82,12 +91,17 @@ class LoginResource(Resource):
         if type(user_with_email) is not tuple:
             user_id = user_with_email['user_id']
             role = user_with_email['role']
+            if role == 1:
+                role_name = "attendant"
+            else:
+                role_name = "admin"
             if Bcrypt.check_password_hash(user_with_email['password'],
                                           data['password']):
                 access_token = create_access_token(identity=(user_id, role), 
                                                    expires_delta=expires)
                 return{"access_token": access_token, 
-                       "message": "logged in"}, 200
+                       "message": "logged in", 
+                       "role": role_name}, 200
         return {"message": "invalid credentials"}, 422
 
 
@@ -139,7 +153,3 @@ class UserRoleResource(Resource):
                 message = "role changed to admin"
             user.change_role(data['email'], user_role)
             return {"message": message}
-        return {"message": "user with email does not exist"}
-
-
-

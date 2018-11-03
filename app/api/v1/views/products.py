@@ -1,4 +1,4 @@
-import re
+
 from flask_restful import reqparse, Resource
 
 # local imports

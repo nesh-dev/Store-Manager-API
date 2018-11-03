@@ -6,11 +6,13 @@ from datetime import date
 from .views.auth import (SignupResource, LoginResource, LogoutResource, 
                          UserRoleResource)
 
-from .views.products import ProductListResource, ProductsResource
+from .views.products import ProductListResource, ProductsResource, SearchProduct
 
 from .views.sales import SalesListResource, SalesResource, AttendatSales
 from .views.category import (CategoryListResource, CategoryResource, 
                              AddProductsToCategories, ProductsInCategory)
+
+from .views.redirects import home, docs 
                   
 apiv2 = Blueprint('apiv2', __name__)
 
@@ -34,3 +36,4 @@ api.add_resource(CategoryListResource, '/categories')
 api.add_resource(CategoryResource, '/category/<int:id>')
 api.add_resource(AddProductsToCategories, '/cat/products')
 api.add_resource(ProductsInCategory, '/products/cat/<int:id>')
+api.add_resource(SearchProduct, '/search/<string:name>')

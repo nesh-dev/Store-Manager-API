@@ -6,3 +6,5 @@
 /.vscode
 /.pytest.cache
 .env
+/.ipynb_checkpoints
+
