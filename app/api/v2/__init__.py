@@ -6,9 +6,11 @@ from datetime import date
 from .views.auth import (SignupResource, LoginResource, LogoutResource, 
                          UserRoleResource)
 
-from .views.products import ProductListResource, ProductsResource, SearchProduct
+from .views.products import (ProductListResource, ProductsResource,
+                             SearchProduct)
 
 from .views.sales import SalesListResource, SalesResource, AttendatSales
+
 from .views.category import (CategoryListResource, CategoryResource, 
                              AddProductsToCategories, ProductsInCategory)
 

@@ -73,10 +73,10 @@ class SalesResource(Resource):
 
         sale_attendat_email = sale_to_get['attendant_email']
 
-
-        if (sale_attendat_email != attendant_email) or (user_role != 2):
-            return {"message": "unauthorized to view sale item"}
-        return sale_to_get
+        print(sale_attendat_email)
+        if sale_attendat_email == attendant_email or user_role == 2:
+            return sale_to_get
+        return {"message": "unauthorized to view sale item"}
      
 
     @admin_allowed
