@@ -2,6 +2,8 @@ from flask_restful import reqparse, Resource
 from flask_jwt_extended import get_jwt_identity
 from ..models.sales import SalesModel 
 from ..models.auth import UserModel
+from ..models.products import ProductsModel
+
 from ...middleware.middleware import (admin_allowed, both_roles_allowed,
                                       attendant_allowed)
 
@@ -64,18 +66,30 @@ class SalesResource(Resource):
         user_role = current_user[1]
 
         user = UserModel()
+        sale = SalesModel()
+        product = ProductsModel()
+
         user = user.get_item('users', user_id=user_id)
         attendant_email = user['email']
-        sale = SalesModel()
+        
+
         sale_to_get = sale.get_item('sales', sale_id=id)
+        sale_items = sale.get_all_with('sale_items', sale_id=id)
         if type(sale_to_get) == tuple:
                return {"message": message}, 404
 
         sale_attendat_email = sale_to_get['attendant_email']
 
-        print(sale_attendat_email)
+        for dict_item in sale_items:
+            product_id = dict_item['product_id']
+            product_to_get = product.get_item('products', product_id=product_id)
+            name = {"name":product_to_get['name']}
+            price = {"price":product_to_get['price']}
+            dict_item.update(name)
+            dict_item.update(price)
+
         if sale_attendat_email == attendant_email or user_role == 2:
-            return sale_to_get
+            return {"sale":sale_to_get, "sale_items":sale_items}
         return {"message": "unauthorized to view sale item"}
      
 
