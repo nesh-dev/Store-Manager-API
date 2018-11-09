@@ -112,13 +112,18 @@ class AttendatSales(Resource):
         current_user = get_jwt_identity()
         user_id = current_user[0]
         user_role = current_user[1]
-
+        total = 0
         user = UserModel()
         user = user.get_item('users', user_id=user_id)
+        username = user['user_name']
         attendant_email = user['email']
         if attendant_email == email or user_role==2:
             sale = SalesModel()
             users_sales = sale.get_all_with('sales', attendant_email=email)
+            total_sales = len(users_sales)
+            for sale in users_sales: 
+                total += sale['total']
+            users_sales.append({"total_sales":total_sales, "total":total, "user":username})
             return users_sales
         return {"message": "unauthorized to view records"}, 401
         
