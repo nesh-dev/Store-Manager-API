@@ -109,16 +109,16 @@ class AttendatSales(Resource):
     @both_roles_allowed
     def get(self, email):
         """ get a user sales based on their email """
-        current_user = get_jwt_identity
+        current_user = get_jwt_identity()
         user_id = current_user[0]
+        user_role = current_user[1]
 
         user = UserModel()
         user = user.get_item('users', user_id=user_id)
         attendant_email = user['email']
-        if attendant_email != email:
-            return {"message": "unauthorized to view records"}, 401
-        sale = SalesModel()
-        users_sales = sale.get_all_with('sales', attendant_email=email)
-        return users_sales
-
+        if attendant_email == email or user_role==2:
+            sale = SalesModel()
+            users_sales = sale.get_all_with('sales', attendant_email=email)
+            return users_sales
+        return {"message": "unauthorized to view records"}, 401
         
