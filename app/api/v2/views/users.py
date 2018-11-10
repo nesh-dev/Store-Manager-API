@@ -12,11 +12,13 @@ class UserListResource(Resource):
         users = user.get_all('users')
         users_list = []
         for user in users:
-        	name = user['user_name']
-        	email = user['email']
-        	role = user['role']
-        	each_user = {"name":name, "email":email, "role":role}
-        	users_list.append(each_user)
+            user_id = user['user_id']
+            name = user['user_name']
+            email = user['email']
+            role = user['role']
+            each_user = {"name":name, "email":email, "role":role, 
+                         "user_id":user_id}
+            users_list.append(each_user)
         return users_list
 
 
