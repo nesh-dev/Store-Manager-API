@@ -7,6 +7,7 @@ from ..models.auth import UserModel
 
 class UserListResource(Resource): 
 
+    @admin_allowed
     def get(self):
         user = UserModel()
         users = user.get_all('users')
@@ -23,6 +24,8 @@ class UserListResource(Resource):
 
 
 class UserResource(Resource):
+
+    @admin_allowed
     def delete(self, id):
         user = UserModel()
         user_to_delete = user.get_item('users', user_id=id)
