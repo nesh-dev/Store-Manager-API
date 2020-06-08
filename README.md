@@ -14,7 +14,7 @@ This is the REST API For the APP
 ### Installation and Setup 
 - Clone the repo 
 
-    `git clone https://github.com/kevinene91/Store-Manager-API.git`
+    `git clone https://github.com/nesh-dev/Store-Manager-API.git`
 
 - Switch the develop branch 
 
